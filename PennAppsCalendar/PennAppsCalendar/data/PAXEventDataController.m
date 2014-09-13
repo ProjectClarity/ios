@@ -8,6 +8,7 @@
 
 #import "PAXEventDataController.h"
 #import <CoreData/CoreData.h>
+#import "AFHTTPRequestOperationManager.h"
 
 @interface PAXEventDataController ()
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -38,12 +39,37 @@
 
 #pragma mark - Event Access
 
-- (NSArray *)eventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
+/**
+ * Start fetching events, processing using the given event Handler. The event handler 
+ * is where you get the event, make sure to grab strong references...
+ */
+- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withBlock:(void(^)(PAXEvent *event))eventHandler
 {
+    /*
+     * Potentially use a fetched results controller or what not to handle bindings and all that, plus
+     * infinite scroll. For now use a simple NSArray. Count should not change within a single session
+     * or things will break because of the way Google Calendar pages things.
+     */
     PAXEvent *demoEvent = [[PAXEvent alloc] init];
     demoEvent.name = @"Event name";
     demoEvent.uid = @1;
-    return @[demoEvent];
+    eventHandler(demoEvent);
+}
+
+#pragma mark - External Sources
+
+/**
+ * Request JSON get result from the PAX service
+ */
+- (void)requestJSONForEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
+{
+    // Fetch JSON from service
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"/user/1234/calendar/events/20" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ERROR: %@", error);
+    }];
 }
 
 #pragma mark - Core Data Stack
