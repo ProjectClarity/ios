@@ -9,8 +9,12 @@
 #import "PAXEventDataController.h"
 #import <CoreData/CoreData.h>
 #import "AFHTTPRequestOperationManager.h"
+#import "PAXEvent.h"
 
-@interface PAXEventDataController ()
+// Hard coded for now... Don't change between sessions
+#define BATCH_SIZE 250
+
+@interface PAXEventDataController () <NSFetchedResultsControllerDelegate>
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -40,29 +44,121 @@
 #pragma mark - Event Access
 
 /**
- * Start fetching events, processing using the given event Handler. The event handler 
- * is where you get the event, make sure to grab strong references...
+ * Ask the data controller to fetch the next set of events.
+ * This will update the core data stack when a successful fetch occurs.
  */
-- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler
+- (void)fetchMoreEvents
 {
-    /*
-     * Potentially use a fetched results controller or what not to handle bindings and all that, plus
-     * infinite scroll. For now use a simple NSArray. Count should not change within a single session
-     * or things will break because of the way Google Calendar pages things.
-     */
-    [self requestJSONForEventsAfterDate:date fetchCount:20 withHandler:eventHandler];
+    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE];
 }
+
+/**
+ * Update all events in the core data stack from the server.
+ */
+- (void)refreshAllEvents
+{
+    [self reset];
+    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE];
+}
+
+- (void)reset
+{
+    NSError *error;
+    NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"PAXEvents.sqlite"];
+    [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+}
+
+
+
+
+#pragma mark - Core Data Integration
+
+@synthesize fetchedResultsController = _fetchedResultsController;
+
+/** 
+ * Get the fetchedResultsController, which acts as the data source for the collection view. This
+ * mirrors EXACTLY what is shown.
+ **/
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PAXEvent" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:100];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"PAXCache"];
+    aFetchedResultsController.delegate = self;
+    _fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![_fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return _fetchedResultsController;
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    
+}
+
 
 
 #pragma mark - External Sources
 
 /**
- * Request JSON get result from the PAX service
+ * Fetch and save events into the local managed object context.
  */
-- (void)requestJSONForEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler
+- (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
+{
+    NSDateFormatter *dateConverter = [[NSDateFormatter alloc] init];
+    [dateConverter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    [self processEventsAfterDate:date fetchCount:count withHandler:^(NSArray *events) {
+        for (NSDictionary *JSONEvent in events) {
+            // stick into the core data stack
+            NSEntityDescription *employeeEntity = [NSEntityDescription
+                                                   entityForName:@"PAXEvent"
+                                                   inManagedObjectContext:self.managedObjectContext];
+            PAXEvent *newLocalEvent = [[PAXEvent alloc] initWithEntity:employeeEntity insertIntoManagedObjectContext:self.managedObjectContext];
+            newLocalEvent.name = JSONEvent[@"summary"];
+            newLocalEvent.notes = JSONEvent[@"description"];
+            NSDate *convertedStartDate = [dateConverter dateFromString:JSONEvent[@"start"][@"dateTime"]];
+            NSLog(@"Converted date: %@", convertedStartDate);
+            newLocalEvent.startDate = convertedStartDate;
+        }
+        // Persist all changes
+        [self saveContext];
+    }];
+}
+
+/**
+ * Start fetching events, processing using the given event Handler.
+ * Handle fetched JSON events by passing in an eventsHandler
+ */
+- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(NSArray *events))eventsHandler
 {
     // Fetch JSON from service
-    NSString *urlString = @"https://pennappsx-web.herokuapp.com/user/7023/calendar/events/20";
+    NSString *urlString = [NSString stringWithFormat:@"https://pennappsx-web.herokuapp.com/user/%d/calendar/events/%d", 7023, BATCH_SIZE];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -72,16 +168,7 @@
         NSDictionary *parsedJSONDictionary = (NSDictionary *)responseObject;
         // todo reduce hard coding
         NSArray *eventsArray = parsedJSONDictionary[@"events"];
-        for (NSDictionary *JSONEvent in eventsArray) {
-            // TODO: stick into the core data stack
-            NSEntityDescription *employeeEntity = [NSEntityDescription
-                                                   entityForName:@"PAXEvent"
-                                                   inManagedObjectContext:self.managedObjectContext];
-            PAXEvent *newLocalEvent = [[PAXEvent alloc] initWithEntity:employeeEntity insertIntoManagedObjectContext:self.managedObjectContext];
-            newLocalEvent.notes = JSONEvent[@"description"];
-            eventHandler(newLocalEvent);
-        }
-        
+        eventsHandler(eventsArray);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR: %@", error);
     }];
@@ -145,7 +232,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"jkjkjkj.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"PAXEvents.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

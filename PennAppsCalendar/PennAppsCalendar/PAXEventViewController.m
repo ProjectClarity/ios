@@ -9,11 +9,11 @@
 #import "PAXEventViewController.h"
 #import "PAXEventDataController.h"
 #import "PAXEventCollectionViewCell.h"
+#import "PAXEvent.h"
 
 @interface PAXEventViewController ()
 
 @property (strong, nonatomic) PAXEventDataController *eventDataController;
-@property (strong, nonatomic) NSArray *eventsArray;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
@@ -36,6 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.eventDataController = [PAXEventDataController sharedEventDataController];
+    [self.eventDataController refreshAllEvents]; // TODO
     
     //Establishing a location manager that will start updating the location of the user
     self.locationManager = [[CLLocationManager alloc] init];
@@ -44,17 +46,10 @@
     
     [self.locationManager startUpdatingLocation];
     
-    PAXEvent *event1 = [[PAXEvent alloc] init];
-    PAXEvent *event2 = [[PAXEvent alloc] init];
-    
-    self.eventsArray = @[event1, event2];
-
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
     
-//    self.eventDataController = [PAXEventDataController sharedEventDataController];
-//    self.eventsArray = [self.eventDataController eventsAfterDate:[NSDate date] fetchCount:5];
     
 }
 
@@ -64,10 +59,10 @@
 {
     PAXEventCollectionViewCell *eventCell = [self.eventsCollectionView dequeueReusableCellWithReuseIdentifier:@"eventCell" forIndexPath:indexPath];
     
-    PAXEvent *event = self.eventsArray[indexPath.row];
+    PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
     
     eventCell.backgroundColor = [UIColor redColor];
-    eventCell.eventNameLabel.text = @"Event Name"; //should grab event.name
+    eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventMinutesLabel.text = @"In X Minutes"; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
     
@@ -83,9 +78,9 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 2;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.eventDataController.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
-
 
 - (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
 {

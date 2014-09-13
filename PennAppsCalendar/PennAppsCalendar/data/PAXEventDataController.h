@@ -16,9 +16,20 @@
 #pragma mark - Event Access
 
 /**
- * Get an array of events after the given date,
- * limited to at most fetchCount.
+ * The window into all data that should be displayed
  */
-- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler;
+@property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+/**
+ * Ask the data controller to fetch the next set of events.
+ * This will update the core data stack when a successful fetch occurs.
+ */
+- (void)fetchMoreEvents;
+
+/**
+ * Update all events in the core data stack from the server.
+ */
+- (void)refreshAllEvents;
+
 
 @end
