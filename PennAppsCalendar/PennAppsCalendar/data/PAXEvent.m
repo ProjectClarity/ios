@@ -12,5 +12,6 @@
 @implementation PAXEvent
 
 @dynamic name;
+@dynamic uid;
 
 @end

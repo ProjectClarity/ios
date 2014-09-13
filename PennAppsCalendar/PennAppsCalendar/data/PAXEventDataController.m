@@ -40,7 +40,10 @@
 
 - (NSArray *)eventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
 {
-    return nil;
+    PAXEvent *demoEvent = [[PAXEvent alloc] init];
+    demoEvent.name = @"Event name";
+    demoEvent.uid = @1;
+    return @[demoEvent];
 }
 
 #pragma mark - Core Data Stack

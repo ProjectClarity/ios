@@ -26,7 +26,7 @@
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
-		87D19F1419C4147800FA1F5C /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F1319C4147800FA1F5C /* PAXEvent.m */; };
+		87D19F1719C4193700FA1F5C /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F1619C4193700FA1F5C /* PAXEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +67,8 @@
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		87D19F1019C4142800FA1F5C /* PAXEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAXEvents.xcdatamodel; sourceTree = "<group>"; };
-		87D19F1219C4147800FA1F5C /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
-		87D19F1319C4147800FA1F5C /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
+		87D19F1519C4193700FA1F5C /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
+		87D19F1619C4193700FA1F5C /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,9 +180,9 @@
 			children = (
 				87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */,
 				87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */,
+				87D19F1519C4193700FA1F5C /* PAXEvent.h */,
+				87D19F1619C4193700FA1F5C /* PAXEvent.m */,
 				87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */,
-				87D19F1219C4147800FA1F5C /* PAXEvent.h */,
-				87D19F1319C4147800FA1F5C /* PAXEvent.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87D19F1419C4147800FA1F5C /* PAXEvent.m in Sources */,
+				87D19F1719C4193700FA1F5C /* PAXEvent.m in Sources */,
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
 				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,
 				87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */,
