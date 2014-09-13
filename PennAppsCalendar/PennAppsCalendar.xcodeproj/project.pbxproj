@@ -23,6 +23,10 @@
 		2707C47D19C3FD2A00A3419F /* PAXEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C47C19C3FD2A00A3419F /* PAXEventViewController.m */; };
 		2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */; };
 		2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C48219C3FD5400A3419F /* PAXHomeViewController.m */; };
+		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
+		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
+		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
+		87D19F1419C4147800FA1F5C /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F1319C4147800FA1F5C /* PAXEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +63,12 @@
 		2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXMoreInfoViewController.m; sourceTree = "<group>"; };
 		2707C48119C3FD5400A3419F /* PAXHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXHomeViewController.h; sourceTree = "<group>"; };
 		2707C48219C3FD5400A3419F /* PAXHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXHomeViewController.m; sourceTree = "<group>"; };
+		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
+		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
+		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		87D19F1019C4142800FA1F5C /* PAXEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAXEvents.xcdatamodel; sourceTree = "<group>"; };
+		87D19F1219C4147800FA1F5C /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
+		87D19F1319C4147800FA1F5C /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */,
 				2707C44D19C3D45C00A3419F /* CoreGraphics.framework in Frameworks */,
 				2707C44F19C3D45C00A3419F /* UIKit.framework in Frameworks */,
 				2707C44B19C3D45C00A3419F /* Foundation.framework in Frameworks */,
@@ -107,6 +118,7 @@
 		2707C44919C3D45C00A3419F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				87D19F0D19C413EF00FA1F5C /* CoreData.framework */,
 				2707C44A19C3D45C00A3419F /* Foundation.framework */,
 				2707C44C19C3D45C00A3419F /* CoreGraphics.framework */,
 				2707C44E19C3D45C00A3419F /* UIKit.framework */,
@@ -128,6 +140,7 @@
 				2707C47E19C3FD3A00A3419F /* PAXMoreInfoViewController.h */,
 				2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */,
 				2707C45C19C3D45D00A3419F /* Images.xcassets */,
+				87D19EB919C40F9000FA1F5C /* Data */,
 				2707C45119C3D45C00A3419F /* Supporting Files */,
 			);
 			path = PennAppsCalendar;
@@ -160,6 +173,18 @@
 				2707C46C19C3D45D00A3419F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		87D19EB919C40F9000FA1F5C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */,
+				87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */,
+				87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */,
+				87D19F1219C4147800FA1F5C /* PAXEvent.h */,
+				87D19F1319C4147800FA1F5C /* PAXEvent.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +284,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87D19F1419C4147800FA1F5C /* PAXEvent.m in Sources */,
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
 				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,
+				87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */,
 				2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */,
+				87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */,
 				2707C47D19C3FD2A00A3419F /* PAXEventViewController.m in Sources */,
 				2707C45719C3D45D00A3419F /* main.m in Sources */,
 			);
@@ -460,6 +488,7 @@
 				2707C47519C3D45D00A3419F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2707C47619C3D45D00A3419F /* Build configuration list for PBXNativeTarget "PennAppsCalendarTests" */ = {
 			isa = XCConfigurationList;
@@ -468,8 +497,22 @@
 				2707C47819C3D45D00A3419F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				87D19F1019C4142800FA1F5C /* PAXEvents.xcdatamodel */,
+			);
+			currentVersion = 87D19F1019C4142800FA1F5C /* PAXEvents.xcdatamodel */;
+			path = PAXEvents.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2707C43F19C3D45C00A3419F /* Project object */;
 }

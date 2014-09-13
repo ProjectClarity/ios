@@ -7,11 +7,17 @@
 //
 
 #import "PAXAppDelegate.h"
+#import "PAXEventDataController.h"
+
+@interface PAXAppDelegate ()
+@property (strong, nonatomic) PAXEventDataController *eventDataController;
+@end
 
 @implementation PAXAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.eventDataController = [PAXEventDataController sharedEventDataController];
     return YES;
 }
 
