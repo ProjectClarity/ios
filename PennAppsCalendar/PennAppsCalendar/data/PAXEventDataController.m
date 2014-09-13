@@ -67,17 +67,16 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", [[responseObject class] description]);
-        NSLog(@"JSON: %@", responseObject);
         // for event in responseObject,
         // call event handler
         NSDictionary *parsedJSONDictionary = (NSDictionary *)responseObject;
         // todo reduce hard coding
-        NSArray *eventsArray = responseObject[@"events"];
+        NSArray *eventsArray = parsedJSONDictionary[@"events"];
         for (NSDictionary *JSONEvent in eventsArray) {
             // TODO: stick into the core data stack
             PAXEvent *newLocalEvent = [[PAXEvent alloc] init];
-            newLocalEvent.description = JSONEvent[@"description"];
+            newLocalEvent.notes = JSONEvent[@"description"];
+            eventHandler(newLocalEvent);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
