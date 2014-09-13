@@ -16,10 +16,14 @@
 // Other issues: currently re-fetches every time, among other things.
 #define BATCH_SIZE 250
 
+#define DEBUG_MODE 1
+
 @interface PAXEventDataController () <NSFetchedResultsControllerDelegate>
 {
     // keep track of changes, and batch them together
     NSMutableArray *_batchContentChanges;
+    // We keep google's sort order, and cache the "next" index here
+    NSUInteger _currentSortIndex;
 }
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -44,6 +48,7 @@
 {
     self = [super init];
     if (self) {
+        _authPin = 0;
         // TEMP
         [self reset];
     }
@@ -103,7 +108,7 @@
     [fetchRequest setFetchBatchSize:100];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"googleSort" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -167,11 +172,24 @@
     event.name = JSONEvent[@"summary"];
     event.notes = JSONEvent[@"description"];
     event.location = JSONEvent[@"location"];
-    event.endDate = [dateConverter dateFromString:JSONEvent[@"end"][@"dateTime"]];
-    NSDate *convertedStartDate = [dateConverter dateFromString:JSONEvent[@"start"][@"dateTime"]];
-    NSLog(@"Converted date: %@", convertedStartDate);
-    event.startDate = convertedStartDate;
+    NSString *endDateString = JSONEvent[@"end"][@"dateTime"];
+    if (endDateString) {
+        event.endDate = [dateConverter dateFromString:endDateString];
+    }
+    NSString *startDateString = JSONEvent[@"start"][@"dateTime"];
+    if (startDateString) {
+        NSDate *convertedStartDate = [dateConverter dateFromString:startDateString];
+        NSLog(@"Converted date: %@", convertedStartDate);
+        event.startDate = convertedStartDate;
+    }
+    else {
+        NSString *startDateString = JSONEvent[@"start"][@"date"];
+        [dateConverter setDateFormat:@"yyyy-MM-dd"];
+        event.startDate = [dateConverter dateFromString:startDateString];
+    }
     event.uid = JSONEvent[@"id"];
+    event.googleSort = @(_currentSortIndex);
+    _currentSortIndex++;
 }
 
 /**
@@ -181,6 +199,7 @@
 - (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count onCompletion:(void (^)(void))callback
 {
     [self processEventsAfterDate:date fetchCount:count withHandler:^(NSArray *events) {
+        _currentSortIndex = 0;
         for (NSDictionary *JSONEvent in events) {
             // stick into the core data stack, if not in there already
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"PAXEvent"];
@@ -219,7 +238,13 @@
 - (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(NSArray *events))eventsHandler
 {
     // Fetch JSON from service
-    NSString *urlString = [NSString stringWithFormat:@"https://pennappsx-web.herokuapp.com/user/%d/calendar/events/%d", 7023, BATCH_SIZE];
+#if DEBUG_MODE
+    NSLog(@"a;sdlkfj %d", self.authPin);
+    if (self.authPin == 0) {
+        self.authPin = 7023;
+    }
+#endif
+    NSString *urlString = [NSString stringWithFormat:@"https://pennappsx-web.herokuapp.com/user/%lu/calendar/events/%d", (unsigned long)self.authPin, BATCH_SIZE];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -227,6 +252,9 @@
         // for event in responseObject,
         // call event handler
         NSDictionary *parsedJSONDictionary = (NSDictionary *)responseObject;
+        if (parsedJSONDictionary[@"error"]) {
+            NSLog(@"ERROR: %@", parsedJSONDictionary[@"message"]);
+        }
         // todo reduce hard coding
         NSArray *eventsArray = parsedJSONDictionary[@"events"];
         eventsHandler(eventsArray);

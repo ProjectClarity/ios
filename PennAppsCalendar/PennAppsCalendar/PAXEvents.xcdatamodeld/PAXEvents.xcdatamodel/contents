@@ -3,6 +3,7 @@
     <entity name="PAXEvent" representedClassName="PAXEvent" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="geoLocation" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="googleSort" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,6 +11,6 @@
         <attribute name="uid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PAXEvent" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="PAXEvent" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

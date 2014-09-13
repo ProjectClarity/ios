@@ -7,9 +7,10 @@
 //
 
 #import "PAXHomeViewController.h"
+#import "PAXEventDataController.h"
 
 @interface PAXHomeViewController ()
-
+@property (nonatomic, weak) IBOutlet UITextField *pinCodeField;
 @end
 
 @implementation PAXHomeViewController
@@ -33,6 +34,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+// Weeeeeee
+- (IBAction)attemptToPinCodeAndAuth:(id)sender
+{
+    NSString *pinCodeText = [self.pinCodeField text];
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber * myNumber = [f numberFromString:pinCodeText];
+    NSUInteger pin = [myNumber unsignedIntegerValue];
+    [[PAXEventDataController sharedEventDataController] setAuthPin:pin];
+    [self performSegueWithIdentifier:@"AuthSegue" sender:sender];
 }
 
 /*

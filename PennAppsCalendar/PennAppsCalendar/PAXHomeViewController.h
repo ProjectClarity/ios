@@ -10,4 +10,7 @@
 
 @interface PAXHomeViewController : UIViewController
 
+// try to get into the app
+- (IBAction)attemptToPinCodeAndAuth:(id)sender;
+
 @end

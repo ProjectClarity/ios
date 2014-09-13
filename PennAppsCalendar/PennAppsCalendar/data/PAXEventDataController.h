@@ -16,6 +16,11 @@
 #pragma mark - Event Access
 
 /**
+ * A simple pin for authentication/knowing which user
+ */
+@property (assign) NSUInteger authPin;
+
+/**
  * The window into all data that should be displayed
  */
 @property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
