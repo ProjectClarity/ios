@@ -10,4 +10,12 @@
 
 @interface PAXEventViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
+
+
+
+
 @end
