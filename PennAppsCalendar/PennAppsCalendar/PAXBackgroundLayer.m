@@ -13,20 +13,17 @@
 
 + (CAGradientLayer*) skyGradient {
     
-    UIColor *colorOne = [UIColor colorWithRed:(120/255.0) green:(135/255.0) blue:(150/255.0) alpha:1.0];
-    UIColor *colorTwo = [UIColor colorWithRed:(57/255.0)  green:(79/255.0)  blue:(96/255.0)  alpha:1.0];
+    UIColor *topColor = [UIColor colorWithRed:210.0/255.0 green:196.0/255.0 blue:232.0/255.0 alpha:0.75];
+    UIColor *bottomColor = [UIColor colorWithRed:146.0/255.0 green:158.0/255.0 blue:210.0/255.0 alpha:0.75];
     
-    NSArray *colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, colorTwo.CGColor, nil];
-    NSNumber *stopOne = [NSNumber numberWithFloat:0.0];
-    NSNumber *stopTwo = [NSNumber numberWithFloat:1.0];
+    NSArray *gradientColors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    NSArray *gradientLocations = [NSArray arrayWithObjects:[NSNumber numberWithInt:0.0],[NSNumber numberWithInt:1.0], nil];
     
-    NSArray *locations = [NSArray arrayWithObjects:stopOne, stopTwo, nil];
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.colors = gradientColors;
+    gradientLayer.locations = gradientLocations;
     
-    CAGradientLayer *headerLayer = [CAGradientLayer layer];
-    headerLayer.colors = colors;
-    headerLayer.locations = locations;
-    
-    return headerLayer;
+    return gradientLayer;
     
 }
 

@@ -38,10 +38,9 @@
 {
     [super viewWillAppear:animated];
     
-    
-//    CAGradientLayer *bgLayer = [PAXBackgroundLayer skyGradient];
-//    bgLayer.frame = self.view.bounds;
-//    [self.view.layer insertSublayer:bgLayer atIndex:0];
+    CAGradientLayer *backgroundLayer = [PAXBackgroundLayer skyGradient];
+    backgroundLayer.frame = self.view.frame;
+    [self.eventsCollectionView.backgroundView.layer insertSublayer:backgroundLayer atIndex:0];
 
 }
 
