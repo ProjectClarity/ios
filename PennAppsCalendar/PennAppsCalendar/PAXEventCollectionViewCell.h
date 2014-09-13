@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventWalkingTimeLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *eventTimeImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *eventLocationImageView;
 @end

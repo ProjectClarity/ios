@@ -14,6 +14,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *eventsCollectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *timeImageView;
 
 
 @end

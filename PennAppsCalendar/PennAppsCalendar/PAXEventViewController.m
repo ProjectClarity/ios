@@ -36,6 +36,7 @@
     CAGradientLayer *backgroundLayer = [PAXBackgroundLayer skyGradient];
     backgroundLayer.frame = self.view.frame;
     [self.eventsCollectionView.backgroundView.layer insertSublayer:backgroundLayer atIndex:0];
+    
 
 }
 
@@ -53,7 +54,6 @@
         [self.eventsCollectionView addSubview:self.refresher];
         [self.refresher addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     }
-
     self.eventsCollectionView.alwaysBounceVertical = YES;
     
     
@@ -103,12 +103,13 @@
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent]; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
+//    [eventCell.eventTimeImageView [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00]];
     
     [self createEventNameUI:eventCell.eventNameLabel];
-    [self createEventTimeUI:eventCell.eventMinutesLabel];
-    [self createEventLocationUI:eventCell.eventLocationLabel];
-    [self createEventWalkingTimeUI:eventCell.eventWalkingTimeLabel];
-    
+    [self createEventOtherInfoUI:eventCell.eventMinutesLabel];
+    [self createEventOtherInfoUI:eventCell.eventLocationLabel];
+    [self createEventOtherInfoUI:eventCell.eventWalkingTimeLabel];
+
     return eventCell;
     
 }
@@ -167,13 +168,10 @@
     
 }
 
-- (void)createEventTimeUI:(UILabel *)eventName
+- (void)createEventOtherInfoUI:(UILabel *)eventLabel
 {
-    eventName.textColor = [UIColor whiteColor];
-    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
-    eventName.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:1.00];
-    eventName.layer.cornerRadius = 5;
-    eventName.clipsToBounds = YES;
+    eventLabel.textColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:1.00];
+    eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
     
 }
 
