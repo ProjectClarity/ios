@@ -18,7 +18,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.eventDataController = [PAXEventDataController sharedEventDataController];
+    
+    [self createUI];
     return YES;
+}
+
+- (void)createUI
+{
+    [[UILabel appearance] setFont:[UIFont fontWithName:@"Montserrat-Regular" size:17.0]];
+    [[[UIButton appearance] titleLabel] setFont:[UIFont fontWithName:@"Montserrat-Regular" size:17.0]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -24,6 +24,8 @@
 		2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C48219C3FD5400A3419F /* PAXHomeViewController.m */; };
 		2707C48919C41BEE00A3419F /* PAXEventSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C48819C41BEE00A3419F /* PAXEventSegue.m */; };
 		270A92FD19C4BD43000B6F0F /* PAXEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A92FC19C4BD43000B6F0F /* PAXEventCollectionViewCell.m */; };
+		270A930019C4C56B000B6F0F /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 270A92FE19C4C56B000B6F0F /* Montserrat-Bold.ttf */; };
+		270A930119C4C56B000B6F0F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
@@ -77,6 +79,8 @@
 		2707C48819C41BEE00A3419F /* PAXEventSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventSegue.m; path = ../PAXEventSegue.m; sourceTree = "<group>"; };
 		270A92FB19C4BD43000B6F0F /* PAXEventCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXEventCollectionViewCell.h; sourceTree = "<group>"; };
 		270A92FC19C4BD43000B6F0F /* PAXEventCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXEventCollectionViewCell.m; sourceTree = "<group>"; };
+		270A92FE19C4C56B000B6F0F /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -184,6 +188,7 @@
 				2707C48719C41BEE00A3419F /* PAXEventSegue.h */,
 				2707C48819C41BEE00A3419F /* PAXEventSegue.m */,
 				2707C45C19C3D45D00A3419F /* Images.xcassets */,
+				270A930219C4C576000B6F0F /* Resources */,
 				87D19EB919C40F9000FA1F5C /* Data */,
 				2707C45119C3D45C00A3419F /* Supporting Files */,
 			);
@@ -217,6 +222,15 @@
 				2707C46C19C3D45D00A3419F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		270A930219C4C576000B6F0F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */,
+				270A92FE19C4C56B000B6F0F /* Montserrat-Bold.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		87D19EB919C40F9000FA1F5C /* Data */ = {
@@ -334,8 +348,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270A930019C4C56B000B6F0F /* Montserrat-Bold.ttf in Resources */,
 				2707C45519C3D45C00A3419F /* InfoPlist.strings in Resources */,
 				2707C45D19C3D45D00A3419F /* Images.xcassets in Resources */,
+				270A930119C4C56B000B6F0F /* Montserrat-Regular.ttf in Resources */,
 				2707C47A19C3F92000A3419F /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
