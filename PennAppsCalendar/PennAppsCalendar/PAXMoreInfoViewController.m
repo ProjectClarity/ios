@@ -26,7 +26,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UISwipeGestureRecognizer * swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
+    swiperight.direction=UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swiperight];
+}
+
+-(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    [self performSegueWithIdentifier:@"backToEvent" sender:self];
 }
 
 - (void)didReceiveMemoryWarning

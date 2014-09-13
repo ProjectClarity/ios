@@ -39,6 +39,13 @@
                                     <segue destination="3NR-O1-avb" kind="push" identifier="findEvents" id="trm-GE-qjX"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="calendar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-RO-fud">
+                                <rect key="frame" x="77" y="132" width="167" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -101,7 +108,8 @@
                         <outlet property="eventLocationLabel" destination="OGa-NE-ztY" id="zWB-UV-B4E"/>
                         <outlet property="eventMinutesLabel" destination="Vnq-dz-iZN" id="oqe-WV-iTh"/>
                         <outlet property="eventNameLabel" destination="ski-Td-2bY" id="Gnd-s1-iuu"/>
-                        <segue destination="HcT-Db-iOD" kind="push" identifier="eventMoreInfo" id="7zs-eS-X7R"/>
+                        <outlet property="eventScrollView" destination="tLK-rw-Chv" id="hmY-c9-36n"/>
+                        <segue destination="HcT-Db-iOD" kind="custom" identifier="eventMoreInfo" customClass="PAXEventSegue" id="7zs-eS-X7R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JOj-9g-vjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -119,9 +127,20 @@
                     <view key="view" contentMode="scaleToFill" id="r0z-g0-P56">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="more info" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ol-0F-OWB">
+                                <rect key="frame" x="124" y="273" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="O7h-hl-xgD"/>
+                    <connections>
+                        <segue destination="3NR-O1-avb" kind="custom" identifier="backToEvent" customClass="PAXEventSegue" id="3UL-y6-8I2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5f-P6-gOC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -150,4 +169,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="3UL-y6-8I2"/>
+    </inferredMetricsTieBreakers>
 </document>

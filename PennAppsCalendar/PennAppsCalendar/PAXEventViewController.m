@@ -30,6 +30,23 @@
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
+    
+    
+    
+    int numberOfPages = 5;
+    self.eventScrollView.pagingEnabled = YES;
+    self.eventScrollView.contentSize = CGSizeMake(self.eventScrollView.frame.size.width, numberOfPages * self.eventScrollView.frame.size.height);
+    
+//    for (int i = 0; i < numberOfPages; i++) {
+//        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(i * self.eventScroll.frame.size.width + 20,
+//                                                                      20,
+//                                                                      someScrollView.frame.size.width - 40,
+//                                                                      20)];
+//        tmpLabel.textAlignment = UITextAlignmentCenter;
+//        tmpLabel.text = [NSString stringWithFormat:@"This is page %d", i];
+//        [someScrollView addSubview:tmpLabel];
+//        [tmpLabel release];
+//    }
 }
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
