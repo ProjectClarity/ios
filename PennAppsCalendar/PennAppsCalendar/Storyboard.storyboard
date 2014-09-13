@@ -128,12 +128,16 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="w6h-IL-yed">
                                 <rect key="frame" x="0.0" y="25" width="320" height="215"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="HcT-Db-iOD" id="JW1-BT-9Ap"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="O7h-hl-xgD"/>
                     <connections>
+                        <outlet property="eventMapView" destination="w6h-IL-yed" id="RWH-OW-c7o"/>
                         <segue destination="3NR-O1-avb" kind="custom" identifier="backToEvent" customClass="PAXEventSegue" id="3UL-y6-8I2"/>
                     </connections>
                 </viewController>
