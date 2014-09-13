@@ -27,6 +27,9 @@
 {
     [super viewDidLoad];
     
+    self.eventNameLabel.text = self.event.name;
+    
+    
     UISwipeGestureRecognizer* swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
     swiperight.direction=UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swiperight];

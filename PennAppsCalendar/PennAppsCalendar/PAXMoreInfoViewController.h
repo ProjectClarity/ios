@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "PAXEvent.h"
 
 @interface PAXMoreInfoViewController : UIViewController <MKMapViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet MKMapView *eventMapView;
+@property (strong, nonatomic) PAXEvent *event;
+
+@property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 
 @end

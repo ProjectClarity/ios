@@ -10,6 +10,7 @@
 #import "PAXEventDataController.h"
 #import "PAXEventCollectionViewCell.h"
 #import "PAXEvent.h"
+#import "PAXMoreInfoViewController.h"
 
 @interface PAXEventViewController ()
 @property (strong, nonatomic) PAXEventDataController *eventDataController;
@@ -83,11 +84,18 @@
     }
 }
 
+#pragma mark - Gestures
+
 - (void)refresh
 {
     [self.eventDataController refreshAllEventsWithCallback:^{
         [self.refresher endRefreshing];
     }];
+}
+
+-(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    [self performSegueWithIdentifier:@"eventMoreInfo" sender:self];
 }
 
 #pragma mark - Collection View
@@ -98,10 +106,30 @@
     
     PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
     NSUInteger minutesToEvent = (int)([event.startDate timeIntervalSinceDate:[NSDate date]] / 60);
+    if (minutesToEvent < 60) {
+        if (minutesToEvent == 1) {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minute", (unsigned long)minutesToEvent];
+        } else {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent];
+        }
+    } else if (minutesToEvent >= 60 && minutesToEvent < (26*60)) {
+        NSUInteger hoursToEvent = (int)(minutesToEvent / 60);
+        if (hoursToEvent == 1) {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Hour", (unsigned long) hoursToEvent];
+        } else {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Hours", (unsigned long) hoursToEvent];
+        }
+    } else {
+        NSUInteger daysToEvent = (int)(minutesToEvent / (60 * 24));
+        if (daysToEvent == 1) {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Day", (unsigned long) daysToEvent];
+        } else {
+            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Days", (unsigned long) daysToEvent];
+        }
+    }
     
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
-    eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent]; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = event.location; //should grab event.location
 
     
@@ -229,26 +257,28 @@
 }
 
 
--(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
-{
-    [self performSegueWithIdentifier:@"eventMoreInfo" sender:self];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"eventMoreInfo"]) {
+        
+        PAXMoreInfoViewController *moreInfoVC = segue.destinationViewController;
+        
+        NSIndexPath *indexPath = [self.eventsCollectionView indexPathForCell:sender];
+        
+        PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
+    
+        moreInfoVC.event = event;
+    }
 }
-*/
+
 
 @end
