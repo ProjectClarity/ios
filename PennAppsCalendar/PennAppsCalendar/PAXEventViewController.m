@@ -102,7 +102,7 @@
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent]; //should grab difference between current date and event.date
-    eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
+    eventCell.eventLocationLabel.text = event.location; //should grab event.location
 
     
     eventCell.eventTimeImageView.image = [eventCell.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -113,7 +113,7 @@
     
     eventCell.eventWalkingTimeImageView.image = [eventCell.eventWalkingTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [eventCell.eventWalkingTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
-    
+
     [self createEventNameUI:eventCell.eventNameLabel];
     [self createEventOtherInfoUI:eventCell.eventMinutesLabel];
     [self createEventOtherInfoUI:eventCell.eventLocationLabel];

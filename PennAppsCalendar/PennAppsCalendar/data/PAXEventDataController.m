@@ -12,6 +12,8 @@
 #import "PAXEvent.h"
 
 // Hard coded for now... Don't change between sessions
+// Also not really infinite... yet.
+// Other issues: currently re-fetches every time, among other things.
 #define BATCH_SIZE 250
 
 @interface PAXEventDataController () <NSFetchedResultsControllerDelegate>
@@ -164,6 +166,8 @@
     [dateConverter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     event.name = JSONEvent[@"summary"];
     event.notes = JSONEvent[@"description"];
+    event.location = JSONEvent[@"location"];
+    event.endDate = [dateConverter dateFromString:JSONEvent[@"end"][@"dateTime"]];
     NSDate *convertedStartDate = [dateConverter dateFromString:JSONEvent[@"start"][@"dateTime"]];
     NSLog(@"Converted date: %@", convertedStartDate);
     event.startDate = convertedStartDate;
@@ -172,6 +176,7 @@
 
 /**
  * Fetch and save events into the local managed object context.
+ ** TODODODODODO DELETE (which doesn't work)
  */
 - (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count onCompletion:(void (^)(void))callback
 {
