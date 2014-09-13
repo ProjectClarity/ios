@@ -14,5 +14,6 @@
 @dynamic name;
 @dynamic uid;
 @dynamic location;
+@dynamic minutesToEvent;
 
 @end

@@ -67,8 +67,19 @@
     
     [self.geocoder geocodeAddressString:address
                       completionHandler:^(NSArray* placemarks, NSError* error){
-                          CLLocation *eventLocation = [((CLPlacemark *)[placemarks firstObject])location];
+                          event.location = [((CLPlacemark *)[placemarks firstObject])location];
                       }];
+    
+}
+
+- (void)calculatingTimeToLocationOfEvent:(PAXEvent *)event
+{
+    
+    CLLocationDistance distanceFromEvent = [event.location distanceFromLocation:[self.locationManager location]];
+    CLLocationSpeed speedUserIsMoving = [event.location speed];
+    
+    event.minutesToEvent = (distanceFromEvent/speedUserIsMoving) / 60.0;
+    
 }
 
 

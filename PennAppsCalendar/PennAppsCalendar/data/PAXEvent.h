@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * uid;
 @property (strong, nonatomic) CLLocation *location;
+@property (nonatomic) double minutesToEvent;
 
 @end
