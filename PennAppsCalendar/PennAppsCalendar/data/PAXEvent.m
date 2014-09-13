@@ -11,9 +11,12 @@
 
 @implementation PAXEvent
 
+@dynamic endDate;
 @dynamic name;
+@dynamic startDate;
 @dynamic uid;
+@dynamic notes;
+@dynamic geoLocation;
 @dynamic location;
-@dynamic minutesToEvent;
 
 @end

@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <CoreLocation/CoreLocation.h>
 
 
 @interface PAXEvent : NSManagedObject
 
+@property (nonatomic, retain) NSDate * endDate;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSNumber * uid;
-@property (strong, nonatomic) CLLocation *location;
-@property (nonatomic) double minutesToEvent;
+@property (nonatomic, retain) NSString * notes;
+@property (nonatomic, retain) NSData * geoLocation;
+@property (nonatomic, retain) NSString * location;
 
 @end

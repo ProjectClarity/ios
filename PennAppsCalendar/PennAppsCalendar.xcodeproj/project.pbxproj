@@ -26,7 +26,6 @@
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
-		87D19F1719C4193700FA1F5C /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F1619C4193700FA1F5C /* PAXEvent.m */; };
 		87D19F5C19C4ABB500FA1F5C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F4A19C4ABB500FA1F5C /* AFHTTPRequestOperation.m */; };
 		87D19F5D19C4ABB500FA1F5C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F4C19C4ABB500FA1F5C /* AFHTTPRequestOperationManager.m */; };
 		87D19F5E19C4ABB500FA1F5C /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F4E19C4ABB500FA1F5C /* AFHTTPSessionManager.m */; };
@@ -36,6 +35,7 @@
 		87D19F6219C4ABB500FA1F5C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5719C4ABB500FA1F5C /* AFURLRequestSerialization.m */; };
 		87D19F6319C4ABB500FA1F5C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5919C4ABB500FA1F5C /* AFURLResponseSerialization.m */; };
 		87D19F6419C4ABB500FA1F5C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5B19C4ABB500FA1F5C /* AFURLSessionManager.m */; };
+		87D19F6A19C4B5AE00FA1F5C /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F6919C4B5AE00FA1F5C /* PAXEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +78,6 @@
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		87D19F1019C4142800FA1F5C /* PAXEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAXEvents.xcdatamodel; sourceTree = "<group>"; };
-		87D19F1519C4193700FA1F5C /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
-		87D19F1619C4193700FA1F5C /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 		87D19F3D19C4A55D00FA1F5C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		87D19F3F19C4A56C00FA1F5C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87D19F4119C4A57900FA1F5C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -103,6 +101,8 @@
 		87D19F5919C4ABB500FA1F5C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		87D19F5A19C4ABB500FA1F5C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		87D19F5B19C4ABB500FA1F5C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		87D19F6819C4B5AE00FA1F5C /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
+		87D19F6919C4B5AE00FA1F5C /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,8 +220,8 @@
 				87D19F4819C4ABB500FA1F5C /* AFNetworking */,
 				87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */,
 				87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */,
-				87D19F1519C4193700FA1F5C /* PAXEvent.h */,
-				87D19F1619C4193700FA1F5C /* PAXEvent.m */,
+				87D19F6819C4B5AE00FA1F5C /* PAXEvent.h */,
+				87D19F6919C4B5AE00FA1F5C /* PAXEvent.m */,
 				87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */,
 			);
 			name = Data;
@@ -353,8 +353,8 @@
 				87D19F6019C4ABB500FA1F5C /* AFSecurityPolicy.m in Sources */,
 				2707C48919C41BEE00A3419F /* PAXEventSegue.m in Sources */,
 				87D19F5F19C4ABB500FA1F5C /* AFNetworkReachabilityManager.m in Sources */,
-				87D19F1719C4193700FA1F5C /* PAXEvent.m in Sources */,
 				87D19F6119C4ABB500FA1F5C /* AFURLConnectionOperation.m in Sources */,
+				87D19F6A19C4B5AE00FA1F5C /* PAXEvent.m in Sources */,
 				87D19F5C19C4ABB500FA1F5C /* AFHTTPRequestOperation.m in Sources */,
 				87D19F5E19C4ABB500FA1F5C /* AFHTTPSessionManager.m in Sources */,
 				87D19F6219C4ABB500FA1F5C /* AFURLRequestSerialization.m in Sources */,
