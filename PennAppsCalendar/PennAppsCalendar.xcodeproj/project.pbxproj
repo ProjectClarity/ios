@@ -19,6 +19,10 @@
 		2707C46619C3D45D00A3419F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2707C44E19C3D45C00A3419F /* UIKit.framework */; };
 		2707C46E19C3D45D00A3419F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2707C46C19C3D45D00A3419F /* InfoPlist.strings */; };
 		2707C47019C3D45D00A3419F /* PennAppsCalendarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C46F19C3D45D00A3419F /* PennAppsCalendarTests.m */; };
+		2707C47A19C3F92000A3419F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2707C47919C3F92000A3419F /* Storyboard.storyboard */; };
+		2707C47D19C3FD2A00A3419F /* PAXEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C47C19C3FD2A00A3419F /* PAXEventViewController.m */; };
+		2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */; };
+		2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707C48219C3FD5400A3419F /* PAXHomeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,13 @@
 		2707C46B19C3D45D00A3419F /* PennAppsCalendarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PennAppsCalendarTests-Info.plist"; sourceTree = "<group>"; };
 		2707C46D19C3D45D00A3419F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2707C46F19C3D45D00A3419F /* PennAppsCalendarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PennAppsCalendarTests.m; sourceTree = "<group>"; };
+		2707C47919C3F92000A3419F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		2707C47B19C3FD2A00A3419F /* PAXEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXEventViewController.h; sourceTree = "<group>"; };
+		2707C47C19C3FD2A00A3419F /* PAXEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXEventViewController.m; sourceTree = "<group>"; };
+		2707C47E19C3FD3A00A3419F /* PAXMoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXMoreInfoViewController.h; sourceTree = "<group>"; };
+		2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXMoreInfoViewController.m; sourceTree = "<group>"; };
+		2707C48119C3FD5400A3419F /* PAXHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXHomeViewController.h; sourceTree = "<group>"; };
+		2707C48219C3FD5400A3419F /* PAXHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +118,15 @@
 		2707C45019C3D45C00A3419F /* PennAppsCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				2707C47919C3F92000A3419F /* Storyboard.storyboard */,
 				2707C45919C3D45D00A3419F /* PAXAppDelegate.h */,
 				2707C45A19C3D45D00A3419F /* PAXAppDelegate.m */,
+				2707C48119C3FD5400A3419F /* PAXHomeViewController.h */,
+				2707C48219C3FD5400A3419F /* PAXHomeViewController.m */,
+				2707C47B19C3FD2A00A3419F /* PAXEventViewController.h */,
+				2707C47C19C3FD2A00A3419F /* PAXEventViewController.m */,
+				2707C47E19C3FD3A00A3419F /* PAXMoreInfoViewController.h */,
+				2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */,
 				2707C45C19C3D45D00A3419F /* Images.xcassets */,
 				2707C45119C3D45C00A3419F /* Supporting Files */,
 			);
@@ -222,6 +240,7 @@
 			files = (
 				2707C45519C3D45C00A3419F /* InfoPlist.strings in Resources */,
 				2707C45D19C3D45D00A3419F /* Images.xcassets in Resources */,
+				2707C47A19C3F92000A3419F /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +260,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
+				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,
+				2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */,
+				2707C47D19C3FD2A00A3419F /* PAXEventViewController.m in Sources */,
 				2707C45719C3D45D00A3419F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
