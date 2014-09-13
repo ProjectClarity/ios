@@ -18,6 +18,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.eventDataController = [PAXEventDataController sharedEventDataController];
+    // TEST
+    [self.eventDataController processEventsAfterDate:[NSDate date] fetchCount:20 withHandler:^(PAXEvent *event) {
+        NSLog(@"handling event: %@", event);
+    }];
     return YES;
 }
 

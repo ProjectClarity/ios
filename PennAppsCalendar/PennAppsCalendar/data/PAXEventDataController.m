@@ -43,30 +43,43 @@
  * Start fetching events, processing using the given event Handler. The event handler 
  * is where you get the event, make sure to grab strong references...
  */
-- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withBlock:(void(^)(PAXEvent *event))eventHandler
+- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler
 {
     /*
      * Potentially use a fetched results controller or what not to handle bindings and all that, plus
      * infinite scroll. For now use a simple NSArray. Count should not change within a single session
      * or things will break because of the way Google Calendar pages things.
      */
-    PAXEvent *demoEvent = [[PAXEvent alloc] init];
-    demoEvent.name = @"Event name";
-    demoEvent.uid = @1;
-    eventHandler(demoEvent);
+    [self requestJSONForEventsAfterDate:date fetchCount:20 withHandler:eventHandler];
 }
+
 
 #pragma mark - External Sources
 
 /**
  * Request JSON get result from the PAX service
  */
-- (void)requestJSONForEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
+- (void)requestJSONForEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler
 {
     // Fetch JSON from service
+    NSString *urlString = @"https://pennappsx-web.herokuapp.com/user/7023/calendar/events/20";
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"/user/1234/calendar/events/20" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", [[responseObject class] description]);
         NSLog(@"JSON: %@", responseObject);
+        // for event in responseObject,
+        // call event handler
+        NSDictionary *parsedJSONDictionary = (NSDictionary *)responseObject;
+        // todo reduce hard coding
+        NSArray *eventsArray = responseObject[@"events"];
+        for (NSDictionary *JSONEvent in eventsArray) {
+            // TODO: stick into the core data stack
+            PAXEvent *newLocalEvent = [[PAXEvent alloc] init];
+            newLocalEvent.description = JSONEvent[@"description"];
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR: %@", error);
     }];

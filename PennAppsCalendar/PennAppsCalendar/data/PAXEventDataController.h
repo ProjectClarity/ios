@@ -19,6 +19,6 @@
  * Get an array of events after the given date,
  * limited to at most fetchCount.
  */
-- (NSArray *)eventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count;
+- (void)processEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count withHandler:(void(^)(PAXEvent *event))eventHandler;
 
 @end
