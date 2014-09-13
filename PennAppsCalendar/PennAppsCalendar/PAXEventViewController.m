@@ -77,7 +77,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self.eventDataController) {
-        NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE");
+        NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE AT A TIME...");
         [self updateCollectionViewWithChanges:self.eventDataController.pendingChanges];
     }
 }
@@ -97,7 +97,8 @@
     
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
-    eventCell.eventMinutesLabel.text = @"In X Minutes"; //should grab difference between current date and event.date
+    NSTimeInterval timeUntil = [event.startDate timeIntervalSinceDate:[NSDate date]];
+    eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %d Minutes", (int)(timeUntil / 60)]; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
     
     [self createEventNameUI:eventCell.eventNameLabel];
@@ -112,7 +113,7 @@
 - (void)updateCollectionViewWithChanges:(NSArray *)changes
 {
     [self.self.eventsCollectionView reloadData];
-    /*[self.eventsCollectionView performBatchUpdates:^{
+    [self.eventsCollectionView performBatchUpdates:^{
         
         for (NSDictionary *change in changes)
         {
@@ -136,7 +137,7 @@
                 }
             }];
         }
-    } completion:nil];*/
+    } completion:nil];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
