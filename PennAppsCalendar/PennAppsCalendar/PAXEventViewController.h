@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface PAXEventViewController : UIViewController
+@interface PAXEventViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
-@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *eventScrollView;
 

@@ -7,8 +7,17 @@
 //
 
 #import "PAXEventViewController.h"
+#import "PAXEventDataController.h"
 
 @interface PAXEventViewController ()
+
+@property (strong, nonatomic) PAXEventDataController *eventDataController;
+@property (strong, nonatomic) NSArray *eventsArray;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLGeocoder *geocoder;
+
+
 
 @end
 
@@ -26,28 +35,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Establishing a location manager that will start updating the location of the user
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    [self.locationManager startUpdatingLocation];
 
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
     
-    
-    
-    int numberOfPages = 5;
+//    self.eventDataController = [PAXEventDataController sharedEventDataController];
+//    self.eventsArray = [self.eventDataController eventsAfterDate:[NSDate date] fetchCount:5];
+
+    int numberOfPages = [self.eventsArray count];
     self.eventScrollView.pagingEnabled = YES;
     self.eventScrollView.contentSize = CGSizeMake(self.eventScrollView.frame.size.width, numberOfPages * self.eventScrollView.frame.size.height);
     
-//    for (int i = 0; i < numberOfPages; i++) {
-//        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(i * self.eventScroll.frame.size.width + 20,
-//                                                                      20,
-//                                                                      someScrollView.frame.size.width - 40,
-//                                                                      20)];
-//        tmpLabel.textAlignment = UITextAlignmentCenter;
-//        tmpLabel.text = [NSString stringWithFormat:@"This is page %d", i];
-//        [someScrollView addSubview:tmpLabel];
-//        [tmpLabel release];
-//    }
+    for (int i = 0; i < numberOfPages; i++) {
+        
+    }
 }
+
+- (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
+{
+    if(!self.geocoder) {
+        self.geocoder = [[CLGeocoder alloc] init];
+    }
+    
+    [self.geocoder geocodeAddressString:address
+                      completionHandler:^(NSArray* placemarks, NSError* error){
+                          CLLocation *eventLocation = [((CLPlacemark *)[placemarks firstObject])location];
+                      }];
+}
+
 
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {

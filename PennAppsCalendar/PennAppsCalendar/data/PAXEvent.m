@@ -13,5 +13,6 @@
 
 @dynamic name;
 @dynamic uid;
+@dynamic location;
 
 @end
