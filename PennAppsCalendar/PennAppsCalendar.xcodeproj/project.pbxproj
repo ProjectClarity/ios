@@ -26,6 +26,7 @@
 		270A92FD19C4BD43000B6F0F /* PAXEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A92FC19C4BD43000B6F0F /* PAXEventCollectionViewCell.m */; };
 		270A930019C4C56B000B6F0F /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 270A92FE19C4C56B000B6F0F /* Montserrat-Bold.ttf */; };
 		270A930119C4C56B000B6F0F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */; };
+		270A930519C4D342000B6F0F /* PAXBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
@@ -81,6 +82,8 @@
 		270A92FC19C4BD43000B6F0F /* PAXEventCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXEventCollectionViewCell.m; sourceTree = "<group>"; };
 		270A92FE19C4C56B000B6F0F /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		270A930319C4D342000B6F0F /* PAXBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXBackgroundLayer.h; sourceTree = "<group>"; };
+		270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXBackgroundLayer.m; sourceTree = "<group>"; };
 		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -187,6 +190,8 @@
 				2707C47F19C3FD3A00A3419F /* PAXMoreInfoViewController.m */,
 				2707C48719C41BEE00A3419F /* PAXEventSegue.h */,
 				2707C48819C41BEE00A3419F /* PAXEventSegue.m */,
+				270A930319C4D342000B6F0F /* PAXBackgroundLayer.h */,
+				270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */,
 				2707C45C19C3D45D00A3419F /* Images.xcassets */,
 				270A930219C4C576000B6F0F /* Resources */,
 				87D19EB919C40F9000FA1F5C /* Data */,
@@ -388,6 +393,7 @@
 				87D19F6319C4ABB500FA1F5C /* AFURLResponseSerialization.m in Sources */,
 				2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */,
 				87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */,
+				270A930519C4D342000B6F0F /* PAXBackgroundLayer.m in Sources */,
 				2707C47D19C3FD2A00A3419F /* PAXEventViewController.m in Sources */,
 				2707C45719C3D45D00A3419F /* main.m in Sources */,
 			);

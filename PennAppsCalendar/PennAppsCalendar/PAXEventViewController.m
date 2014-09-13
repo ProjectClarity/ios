@@ -20,6 +20,7 @@
 
 
 
+
 @end
 
 @implementation PAXEventViewController
@@ -31,6 +32,17 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+//    CAGradientLayer *bgLayer = [PAXBackgroundLayer skyGradient];
+//    bgLayer.frame = self.view.bounds;
+//    [self.view.layer insertSublayer:bgLayer atIndex:0];
+
 }
 
 - (void)viewDidLoad
@@ -61,10 +73,15 @@
     
     PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
     
-    eventCell.backgroundColor = [UIColor redColor];
+    eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventMinutesLabel.text = @"In X Minutes"; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
+    
+    [self createEventNameUI:eventCell.eventNameLabel];
+    [self createEventTimeUI:eventCell.eventMinutesLabel];
+    [self createEventLocationUI:eventCell.eventLocationLabel];
+    [self createEventWalkingTimeUI:eventCell.eventWalkingTimeLabel];
     
     return eventCell;
     
@@ -81,6 +98,49 @@
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.eventDataController.fetchedResultsController sections][section];
     return [sectionInfo numberOfObjects];
 }
+
+#pragma mark - UI
+
+- (void)createEventNameUI:(UILabel *)eventName
+{
+    eventName.textColor = [UIColor whiteColor];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Bold" size:26.0];
+    eventName.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00];
+    eventName.layer.cornerRadius = 5;
+    eventName.clipsToBounds = YES;
+    
+}
+
+- (void)createEventTimeUI:(UILabel *)eventName
+{
+    eventName.textColor = [UIColor whiteColor];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
+    eventName.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:1.00];
+    eventName.layer.cornerRadius = 5;
+    eventName.clipsToBounds = YES;
+    
+}
+
+- (void)createEventLocationUI:(UILabel *)eventName
+{
+    eventName.textColor = [UIColor whiteColor];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
+    eventName.backgroundColor = [UIColor colorWithRed:208.0/255.0 green:142.0/255.0 blue:137.0/255.0 alpha:1.00];
+    eventName.layer.cornerRadius = 5;
+    eventName.clipsToBounds = YES;
+    
+}
+
+- (void)createEventWalkingTimeUI:(UILabel *)eventName
+{
+    eventName.textColor = [UIColor whiteColor];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
+    eventName.backgroundColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
+    eventName.layer.cornerRadius = 5;
+    eventName.clipsToBounds = YES;
+    
+}
+
 
 - (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
 {

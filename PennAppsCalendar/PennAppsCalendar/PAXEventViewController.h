@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "PAXBackgroundLayer.h"
 
 @interface PAXEventViewController : UIViewController <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
