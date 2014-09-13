@@ -74,7 +74,10 @@
         NSArray *eventsArray = parsedJSONDictionary[@"events"];
         for (NSDictionary *JSONEvent in eventsArray) {
             // TODO: stick into the core data stack
-            PAXEvent *newLocalEvent = [[PAXEvent alloc] init];
+            NSEntityDescription *employeeEntity = [NSEntityDescription
+                                                   entityForName:@"PAXEvent"
+                                                   inManagedObjectContext:self.managedObjectContext];
+            PAXEvent *newLocalEvent = [[PAXEvent alloc] initWithEntity:employeeEntity insertIntoManagedObjectContext:self.managedObjectContext];
             newLocalEvent.notes = JSONEvent[@"description"];
             eventHandler(newLocalEvent);
         }
@@ -104,6 +107,7 @@
         }
     }
 }
+
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.

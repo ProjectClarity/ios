@@ -75,10 +75,10 @@
 - (void)calculatingTimeToLocationOfEvent:(PAXEvent *)event
 {
     
-    CLLocationDistance distanceFromEvent = [event.location distanceFromLocation:[self.locationManager location]];
-    CLLocationSpeed speedUserIsMoving = [event.location speed];
+    //CLLocationDistance distanceFromEvent = [event.location distanceFromLocation:[self.locationManager location]];
+    //CLLocationSpeed speedUserIsMoving = [event.location speed];
     
-    event.minutesToEvent = (distanceFromEvent/speedUserIsMoving) / 60.0;
+    //event.minutesToEvent = (distanceFromEvent/speedUserIsMoving) / 60.0;
     
 }
 
