@@ -275,7 +275,7 @@
         
         PAXMoreInfoViewController *moreInfoVC = segue.destinationViewController;
         
-        NSIndexPath *indexPath = [self.eventsCollectionView indexPathForCell:sender];
+        NSIndexPath *indexPath = [self.eventsCollectionView indexPathsForVisibleItems][0];
         
         PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
     
