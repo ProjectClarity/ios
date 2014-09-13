@@ -12,15 +12,10 @@
 #import "PAXEvent.h"
 
 @interface PAXEventViewController ()
-
 @property (strong, nonatomic) PAXEventDataController *eventDataController;
-
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
-
-
-
-
+@property (strong, nonatomic) UIRefreshControl *refresher;
 @end
 
 @implementation PAXEventViewController
@@ -48,17 +43,23 @@
 {
     [super viewDidLoad];
     self.eventDataController = [PAXEventDataController sharedEventDataController];
-    [self.eventDataController addObserver:self forKeyPath:@"pendingChanges" options:nil context:0];
+    [self.eventDataController addObserver:self forKeyPath:@"pendingChanges" options:0 context:0];
     
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.tintColor = [UIColor grayColor];
-    [refreshControl addTarget:self action:@selector(refersh) forControlEvents:UIControlEventValueChanged];
-    [self.eventsCollectionView addSubview:refreshControl];
+    if (!self.refresher) {
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.tintColor = [UIColor grayColor];
+        self.refresher = refreshControl;
+        [self.eventsCollectionView addSubview:self.refresher];
+        [self.refresher addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    }
+
     self.eventsCollectionView.alwaysBounceVertical = YES;
     
     
-    [self.eventDataController refreshAllEvents]; // TODO
+    [self.eventDataController refreshAllEventsWithCallback:^{
+        NSLog(@"first load!");
+    }]; // TODO
     
     //Establishing a location manager that will start updating the location of the user
     self.locationManager = [[CLLocationManager alloc] init];
@@ -77,14 +78,16 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self.eventDataController) {
-        NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE AT A TIME...");
+        NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE");
         [self updateCollectionViewWithChanges:self.eventDataController.pendingChanges];
     }
 }
 
 - (void)refresh
 {
-    
+    [self.eventDataController refreshAllEventsWithCallback:^{
+        [self.refresher endRefreshing];
+    }];
 }
 
 #pragma mark - Collection View
@@ -94,11 +97,11 @@
     PAXEventCollectionViewCell *eventCell = [self.eventsCollectionView dequeueReusableCellWithReuseIdentifier:@"eventCell" forIndexPath:indexPath];
     
     PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
+    NSUInteger minutesToEvent = (int)([event.startDate timeIntervalSinceDate:[NSDate date]] / 60);
     
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
-    NSTimeInterval timeUntil = [event.startDate timeIntervalSinceDate:[NSDate date]];
-    eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %d Minutes", (int)(timeUntil / 60)]; //should grab difference between current date and event.date
+    eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent]; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
     
     [self createEventNameUI:eventCell.eventNameLabel];
@@ -112,8 +115,8 @@
 
 - (void)updateCollectionViewWithChanges:(NSArray *)changes
 {
-    [self.self.eventsCollectionView reloadData];
-    [self.eventsCollectionView performBatchUpdates:^{
+    [self.eventsCollectionView reloadData];
+    /*[self.eventsCollectionView performBatchUpdates:^{
         
         for (NSDictionary *change in changes)
         {
@@ -137,7 +140,7 @@
                 }
             }];
         }
-    } completion:nil];
+    } completion:nil];*/
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

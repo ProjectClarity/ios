@@ -30,12 +30,12 @@
  * Ask the data controller to fetch the next set of events.
  * This will update the core data stack when a successful fetch occurs.
  */
-- (void)fetchMoreEvents;
+- (void)fetchMoreEventsWithCallback:(void(^)(void))callback;
 
 /**
  * Update all events in the core data stack from the server.
  */
-- (void)refreshAllEvents;
+- (void)refreshAllEventsWithCallback:(void(^)(void))callback;
 
 
 @end

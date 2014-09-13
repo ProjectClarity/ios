@@ -42,7 +42,8 @@
 {
     self = [super init];
     if (self) {
-        
+        // TEMP
+        [self reset];
     }
     return self;
 }
@@ -53,18 +54,17 @@
  * Ask the data controller to fetch the next set of events.
  * This will update the core data stack when a successful fetch occurs.
  */
-- (void)fetchMoreEvents
+- (void)fetchMoreEventsWithCallback:(void (^)(void))callback
 {
-    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE];
+    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE onCompletion:callback];
 }
 
 /**
  * Update all events in the core data stack from the server.
  */
-- (void)refreshAllEvents
+- (void)refreshAllEventsWithCallback:(void (^)(void))callback
 {
-    [self reset];
-    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE];
+    [self saveEventsAfterDate:[NSDate date] fetchCount:BATCH_SIZE onCompletion:callback];
 }
 
 - (void)reset
@@ -101,7 +101,7 @@
     [fetchRequest setFetchBatchSize:100];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -155,27 +155,55 @@
 #pragma mark - External Sources
 
 /**
- * Fetch and save events into the local managed object context.
+ * Update an event object with new information
  */
-- (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count
+- (void)updateEvent:(PAXEvent *)event withJSONEvent:(NSDictionary *)JSONEvent
 {
+    // Don't reinstantiate every time (TODO)
     NSDateFormatter *dateConverter = [[NSDateFormatter alloc] init];
     [dateConverter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    event.name = JSONEvent[@"summary"];
+    event.notes = JSONEvent[@"description"];
+    NSDate *convertedStartDate = [dateConverter dateFromString:JSONEvent[@"start"][@"dateTime"]];
+    NSLog(@"Converted date: %@", convertedStartDate);
+    event.startDate = convertedStartDate;
+    event.uid = JSONEvent[@"id"];
+}
+
+/**
+ * Fetch and save events into the local managed object context.
+ */
+- (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count onCompletion:(void (^)(void))callback
+{
     [self processEventsAfterDate:date fetchCount:count withHandler:^(NSArray *events) {
         for (NSDictionary *JSONEvent in events) {
-            // stick into the core data stack
+            // stick into the core data stack, if not in there already
+            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"PAXEvent"];
+            fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@", JSONEvent[@"id"]];
+            NSError *error = nil;
+            NSArray *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+            NSLog(@"existing id: %@", JSONEvent[@"id"]);
+            if (error) {
+                NSLog(@"error: %@", error.localizedDescription);
+            }
+            if (result.lastObject && [[result.lastObject entity].name isEqualToString:@"PAXEvent"]) {
+                // update the object
+                NSLog(@"Updating existing object");
+                [self updateEvent:result.lastObject withJSONEvent:JSONEvent];
+                continue;
+            }
+            // Insert new object, since it doesn't exist already
             NSEntityDescription *employeeEntity = [NSEntityDescription
                                                    entityForName:@"PAXEvent"
                                                    inManagedObjectContext:self.managedObjectContext];
             PAXEvent *newLocalEvent = [[PAXEvent alloc] initWithEntity:employeeEntity insertIntoManagedObjectContext:self.managedObjectContext];
-            newLocalEvent.name = JSONEvent[@"summary"];
-            newLocalEvent.notes = JSONEvent[@"description"];
-            NSDate *convertedStartDate = [dateConverter dateFromString:JSONEvent[@"start"][@"dateTime"]];
-            NSLog(@"Converted date: %@", convertedStartDate);
-            newLocalEvent.startDate = convertedStartDate;
+            [self updateEvent:newLocalEvent withJSONEvent:JSONEvent];
+            
         }
         // Persist all changes
         [self saveContext];
+        // call completion handler
+        callback();
     }];
 }
 

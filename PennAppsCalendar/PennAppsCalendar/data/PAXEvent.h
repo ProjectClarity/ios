@@ -15,7 +15,7 @@
 @property (nonatomic, retain) NSDate * endDate;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * startDate;
-@property (nonatomic, retain) NSNumber * uid;
+@property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * notes;
 @property (nonatomic, retain) NSData * geoLocation;
 @property (nonatomic, retain) NSString * location;
