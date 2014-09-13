@@ -105,8 +105,11 @@
     PAXEventCollectionViewCell *eventCell = [self.eventsCollectionView dequeueReusableCellWithReuseIdentifier:@"eventCell" forIndexPath:indexPath];
     
     PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
-    NSUInteger minutesToEvent = (int)([event.startDate timeIntervalSinceDate:[NSDate date]] / 60);
-    if (minutesToEvent < 60) {
+    NSInteger minutesToEvent = (NSInteger)([event.startDate timeIntervalSinceDate:[NSDate date]] / 60);
+    if (minutesToEvent < 0) {
+        eventCell.eventMinutesLabel.text = @"Happening Now";
+    }
+    else if (minutesToEvent < 60) {
         if (minutesToEvent == 1) {
             eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minute", (unsigned long)minutesToEvent];
         } else {
