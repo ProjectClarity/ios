@@ -15,9 +15,15 @@
 #define BATCH_SIZE 250
 
 @interface PAXEventDataController () <NSFetchedResultsControllerDelegate>
+{
+    // keep track of changes, and batch them together
+    NSMutableArray *_batchContentChanges;
+}
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readwrite, strong, nonatomic) NSArray *pendingChanges;
+
 @end
 
 @implementation PAXEventDataController
@@ -117,12 +123,34 @@
     return _fetchedResultsController;
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+// Should be called on the main thread
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            change[@(type)] = newIndexPath;
+            break;
+        case NSFetchedResultsChangeDelete:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeUpdate:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeMove:
+            change[@(type)] = @[indexPath, newIndexPath];
+            break;
+    }
+    [_batchContentChanges addObject:change];
 }
 
-
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    // Now, we fire off content change
+    self.pendingChanges = [_batchContentChanges copy];
+    [_batchContentChanges removeAllObjects];
+}
 
 #pragma mark - External Sources
 

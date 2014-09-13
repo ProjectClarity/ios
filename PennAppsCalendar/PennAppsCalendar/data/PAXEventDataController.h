@@ -21,6 +21,12 @@
 @property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 /**
+ * An array of pending changes to the fetchedResultsController. Observe
+ * this property to update accordingly.
+ */
+@property (readonly) NSArray *pendingChanges;
+
+/**
  * Ask the data controller to fetch the next set of events.
  * This will update the core data stack when a successful fetch occurs.
  */

@@ -49,6 +49,7 @@
 {
     [super viewDidLoad];
     self.eventDataController = [PAXEventDataController sharedEventDataController];
+    [self.eventDataController addObserver:self forKeyPath:@"pendingChanges" options:nil context:0];
     [self.eventDataController refreshAllEvents]; // TODO
     
     //Establishing a location manager that will start updating the location of the user
@@ -63,6 +64,14 @@
     [self.view addGestureRecognizer:swipeleft];
     
     
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.eventDataController) {
+        NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE");
+        [self updateCollectionViewWithChanges:self.eventDataController.pendingChanges];
+    }
 }
 
 #pragma mark - Collection View
@@ -85,6 +94,36 @@
     
     return eventCell;
     
+}
+
+- (void)updateCollectionViewWithChanges:(NSArray *)changes
+{
+    [self.self.eventsCollectionView reloadData];
+    /*[self.eventsCollectionView performBatchUpdates:^{
+        
+        for (NSDictionary *change in changes)
+        {
+            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                
+                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                switch (type)
+                {
+                    case NSFetchedResultsChangeInsert:
+                        [self.eventsCollectionView insertItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeDelete:
+                        [self.eventsCollectionView deleteItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeUpdate:
+                        [self.eventsCollectionView reloadItemsAtIndexPaths:@[obj]];
+                        break;
+                    case NSFetchedResultsChangeMove:
+                        [self.eventsCollectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                        break;
+                }
+            }];
+        }
+    } completion:nil];*/
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
