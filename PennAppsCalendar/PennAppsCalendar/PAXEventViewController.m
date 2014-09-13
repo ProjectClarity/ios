@@ -103,7 +103,16 @@
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent]; //should grab difference between current date and event.date
     eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
-//    [eventCell.eventTimeImageView [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00]];
+
+    
+    eventCell.eventTimeImageView.image = [eventCell.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [eventCell.eventTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
+    
+    eventCell.eventLocationImageView.image = [eventCell.eventLocationImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [eventCell.eventLocationImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
+    
+    eventCell.eventWalkingTimeImageView.image = [eventCell.eventWalkingTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [eventCell.eventWalkingTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
     
     [self createEventNameUI:eventCell.eventNameLabel];
     [self createEventOtherInfoUI:eventCell.eventMinutesLabel];
@@ -170,7 +179,7 @@
 
 - (void)createEventOtherInfoUI:(UILabel *)eventLabel
 {
-    eventLabel.textColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:1.00];
+    eventLabel.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
     eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
     
 }
