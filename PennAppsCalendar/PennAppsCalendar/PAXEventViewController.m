@@ -8,6 +8,7 @@
 
 #import "PAXEventViewController.h"
 #import "PAXEventDataController.h"
+#import "PAXEventCollectionViewCell.h"
 
 @interface PAXEventViewController ()
 
@@ -42,6 +43,11 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     [self.locationManager startUpdatingLocation];
+    
+    PAXEvent *event1 = [[PAXEvent alloc] init];
+    PAXEvent *event2 = [[PAXEvent alloc] init];
+    
+    self.eventsArray = @[event1, event2];
 
     UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -49,15 +55,37 @@
     
 //    self.eventDataController = [PAXEventDataController sharedEventDataController];
 //    self.eventsArray = [self.eventDataController eventsAfterDate:[NSDate date] fetchCount:5];
-
-    int numberOfPages = [self.eventsArray count];
-    self.eventScrollView.pagingEnabled = YES;
-    self.eventScrollView.contentSize = CGSizeMake(self.eventScrollView.frame.size.width, numberOfPages * self.eventScrollView.frame.size.height);
     
-    for (int i = 0; i < numberOfPages; i++) {
-        
-    }
 }
+
+#pragma mark - Collection View
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PAXEventCollectionViewCell *eventCell = [self.eventsCollectionView dequeueReusableCellWithReuseIdentifier:@"eventCell" forIndexPath:indexPath];
+    
+    PAXEvent *event = self.eventsArray[indexPath.row];
+    
+    eventCell.backgroundColor = [UIColor redColor];
+    eventCell.eventNameLabel.text = @"Event Name"; //should grab event.name
+    eventCell.eventMinutesLabel.text = @"In X Minutes"; //should grab difference between current date and event.date
+    eventCell.eventLocationLabel.text = @"Location"; //should grab event.location
+    
+    return eventCell;
+    
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 2;
+}
+
 
 - (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
 {

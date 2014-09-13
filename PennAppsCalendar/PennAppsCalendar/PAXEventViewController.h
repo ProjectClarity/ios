@@ -9,14 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface PAXEventViewController : UIViewController <CLLocationManagerDelegate>
+@interface PAXEventViewController : UIViewController <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *eventScrollView;
-
+@property (weak, nonatomic) IBOutlet UICollectionView *eventsCollectionView;
 
 
 @end
