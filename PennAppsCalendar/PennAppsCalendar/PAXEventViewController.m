@@ -49,6 +49,15 @@
     [super viewDidLoad];
     self.eventDataController = [PAXEventDataController sharedEventDataController];
     [self.eventDataController addObserver:self forKeyPath:@"pendingChanges" options:nil context:0];
+    
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
+    [refreshControl addTarget:self action:@selector(refersh) forControlEvents:UIControlEventValueChanged];
+    [self.eventsCollectionView addSubview:refreshControl];
+    self.eventsCollectionView.alwaysBounceVertical = YES;
+    
+    
     [self.eventDataController refreshAllEvents]; // TODO
     
     //Establishing a location manager that will start updating the location of the user
@@ -71,6 +80,11 @@
         NSLog(@"UPDATING... SHOULD ONLY BE CALLED ONCE");
         [self updateCollectionViewWithChanges:self.eventDataController.pendingChanges];
     }
+}
+
+- (void)refresh
+{
+    
 }
 
 #pragma mark - Collection View
