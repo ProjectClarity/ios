@@ -12,7 +12,7 @@
 #import "PAXEvent.h"
 #import "PAXMoreInfoViewController.h"
 
-@interface PAXEventViewController ()
+@interface PAXEventViewController () <UIAlertViewDelegate>
 @property (strong, nonatomic) PAXEventDataController *eventDataController;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIRefreshControl *refresher;
@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *scrollToTopButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbarView;
+
+@property (strong, nonatomic) UIAlertView *alert;
 @end
 
 @implementation PAXEventViewController
@@ -118,22 +120,31 @@
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     
-    [self showAlertWithTitle:@"Deleting Event" message:@"Are you sure you want to delete?"];
+    [self showAlertWithTitle:@"Deleting Event" message:@"Are you sure you want to delete?" confirmButton:@"OK" cancelButton:@"Cancel" andTag:0];
     
-    NSIndexPath *indexPath = [self.eventsCollectionView indexPathsForVisibleItems][0];
-    [self.eventDataController deleteEvent:[self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath]];
 }
 
--(void)showAlertWithTitle:(NSString *)title message:(NSString *)message
+-(void)showAlertWithTitle:(NSString *)title message:(NSString *)message confirmButton:(NSString *)confirmMessage cancelButton:(NSString *)cancelMessage andTag:(NSInteger)tag
 {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+    self.alert = [[UIAlertView alloc] initWithTitle:title
                                                     message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                   delegate:self
+                                          cancelButtonTitle:confirmMessage
+                                          otherButtonTitles:cancelMessage, nil];
     
-    [alert show];
+    self.alert.tag = tag;
+    [self.alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (alertView.tag == 0) {
+        if (buttonIndex == 0) {
+            NSIndexPath *indexPath = [self.eventsCollectionView indexPathsForVisibleItems][0];
+            [self.eventDataController deleteEvent:[self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath]];
+        }
+    }
 }
 
 - (IBAction)scrollToTop:(id)sender

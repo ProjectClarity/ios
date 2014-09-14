@@ -33,8 +33,8 @@
     // Do any additional setup after loading the view.
     
     [self createButtonUI:self.getStartedButton];
-    self.tagline1Label.textColor  = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
-    self.tagline2Label.textColor  = [UIColor colorWithRed:163.0/255.0 green:165.0/255.0 blue:176.0/255.0 alpha:1.00];
+    self.tagline1Label.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
+    self.tagline2Label.textColor = [UIColor colorWithRed:163.0/255.0 green:165.0/255.0 blue:176.0/255.0 alpha:1.00];
     
 }
 
