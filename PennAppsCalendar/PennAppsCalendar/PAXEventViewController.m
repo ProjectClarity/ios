@@ -283,5 +283,12 @@
     }
 }
 
+- (IBAction)unwindToEvents:(UIStoryboardSegue *)unwindSegue
+{
+    if([unwindSegue.identifier isEqualToString:@"backToEvents"]){
+        PAXMoreInfoViewController *controller = unwindSegue.sourceViewController;
+    }
+}
+
 
 @end

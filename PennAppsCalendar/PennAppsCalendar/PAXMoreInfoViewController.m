@@ -29,6 +29,8 @@
     
     self.eventNameLabel.text = self.event.name;
     
+    [self createEventNameUI:self.eventNameLabel];
+    
     
     UISwipeGestureRecognizer* swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
     swiperight.direction=UISwipeGestureRecognizerDirectionRight;
@@ -36,10 +38,40 @@
     
 }
 
+- (void)createEventNameUI:(UILabel *)eventName
+{
+    eventName.textColor = [UIColor whiteColor];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Bold" size:26.0];
+    eventName.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00];
+    eventName.layer.cornerRadius = 5;
+    eventName.clipsToBounds = YES;
+    
+}
+
 -(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
 {
-    [self performSegueWithIdentifier:@"backToEvent" sender:self];
+    [self performSegueWithIdentifier:@"backToEvents" sender:self];
 }
+
+# pragma mark - Event Map
+
+//- (void)locateEventOnMap
+//{
+//    self.eventMapView.centerCoordinate = CLLocationCoordinate2DMake(self.event.eventGeoPoint.latitude, self.event.eventGeoPoint.longitude);
+//    
+//    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+//    point.coordinate = self.eventMapView.centerCoordinate;
+//    point.title = self.event.eventName;
+//    
+//    [self.eventMapView addAnnotation:point];
+//}
+//
+//-(void)zoomToLocation
+//{
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (CLLocationCoordinate2DMake(self.event.eventGeoPoint.latitude, self.event.eventGeoPoint.longitude), 1000, 1000);
+//    [self.eventMapView setRegion:region animated:NO];
+//}
+
 
 - (void)didReceiveMemoryWarning
 {
