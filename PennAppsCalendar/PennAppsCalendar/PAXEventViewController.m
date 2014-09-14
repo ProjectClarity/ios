@@ -17,6 +17,8 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIRefreshControl *refresher;
 @property (weak, nonatomic) IBOutlet UIImageView *eventTimeImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *eventArrowUpImageView;
+@property (weak, nonatomic) IBOutlet UIButton *scrollToTopButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbarView;
 @end
@@ -107,6 +109,11 @@
     [self performSegueWithIdentifier:@"eventMoreInfo" sender:self];
 }
 
+- (IBAction)scrollToTop:(id)sender
+{
+    [self.eventsCollectionView scrollToItemAtIndexPath:0 atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+}
+
 #pragma mark - Collection View
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -140,14 +147,23 @@
         }
     }
     
+    if (event.notes != nil) {
+        eventCell.eventNotesLabel.hidden = NO;
+        eventCell.eventNotesLabel.textColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75];
+    }
+    
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventLocationLabel.text = event.location; //should grab event.location
     eventCell.eventMinutesLabel.text = @"Sept 10 \n9:00am–10:00am";
     eventCell.eventDescriptionLabel.text = event.notes;
+
     
     self.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.eventTimeImageView setTintColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00]];
+    
+    self.eventArrowUpImageView.image = [self.eventArrowUpImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.eventArrowUpImageView setTintColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00]];
     
     eventCell.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [eventCell.eventTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];

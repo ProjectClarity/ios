@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *eventTimeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventNotesLabel;
 
 @end
