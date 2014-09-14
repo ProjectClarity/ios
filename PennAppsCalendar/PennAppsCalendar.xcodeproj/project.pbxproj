@@ -28,6 +28,7 @@
 		270A930119C4C56B000B6F0F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 270A92FF19C4C56B000B6F0F /* Montserrat-Regular.ttf */; };
 		270A930519C4D342000B6F0F /* PAXBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */; };
 		270A930E19C4F6DA000B6F0F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270A930D19C4F6DA000B6F0F /* MapKit.framework */; };
+		270A931019C518F2000B6F0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270A930F19C518F2000B6F0F /* CoreLocation.framework */; };
 		8708C30319C506EE00D13805 /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30219C506EE00D13805 /* PAXEvent.m */; };
 		8708C30719C512F800D13805 /* PAXMarginLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30619C512F800D13805 /* PAXMarginLabel.m */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
@@ -87,6 +88,7 @@
 		270A930319C4D342000B6F0F /* PAXBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAXBackgroundLayer.h; sourceTree = "<group>"; };
 		270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXBackgroundLayer.m; sourceTree = "<group>"; };
 		270A930D19C4F6DA000B6F0F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		270A930F19C518F2000B6F0F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8708C30119C506EE00D13805 /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
 		8708C30219C506EE00D13805 /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 		8708C30519C512F800D13805 /* PAXMarginLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXMarginLabel.h; path = "UI Elements/PAXMarginLabel.h"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270A931019C518F2000B6F0F /* CoreLocation.framework in Frameworks */,
 				270A930E19C4F6DA000B6F0F /* MapKit.framework in Frameworks */,
 				87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */,
 				2707C44F19C3D45C00A3419F /* UIKit.framework in Frameworks */,
@@ -167,6 +170,7 @@
 		2707C44919C3D45C00A3419F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				270A930F19C518F2000B6F0F /* CoreLocation.framework */,
 				87D19F4319C4A5BA00FA1F5C /* libz.dylib */,
 				270A930D19C4F6DA000B6F0F /* MapKit.framework */,
 				87D19F4119C4A57900FA1F5C /* MobileCoreServices.framework */,

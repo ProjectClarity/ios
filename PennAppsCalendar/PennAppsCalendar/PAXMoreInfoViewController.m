@@ -8,7 +8,10 @@
 
 #import "PAXMoreInfoViewController.h"
 
-@interface PAXMoreInfoViewController ()
+@interface PAXMoreInfoViewController () <CLLocationManagerDelegate>
+
+@property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) CLLocation *eventGeoLocation;
 
 @end
 
@@ -21,6 +24,15 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self convertAddressToCoordinates:self.event.location ofEvent:self.event];
+    [self locateEventOnMap];
+    [self zoomToLocation];
+    NSLog(@"%@", self.event.location);
+    NSLog(@"%@", self.eventGeoLocation);
 }
 
 - (void)viewDidLoad
@@ -53,30 +65,38 @@
     [self performSegueWithIdentifier:@"backToEvents" sender:self];
 }
 
+- (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
+{
+    if(!self.geocoder) {
+        self.geocoder = [[CLGeocoder alloc] init];
+    }
+    
+    [self.geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count] > 0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            self.eventGeoLocation = placemark.location;
+        }
+    }];
+    
+}
+
 # pragma mark - Event Map
 
-//- (void)locateEventOnMap
-//{
-//    self.eventMapView.centerCoordinate = CLLocationCoordinate2DMake(self.event.eventGeoPoint.latitude, self.event.eventGeoPoint.longitude);
-//    
-//    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-//    point.coordinate = self.eventMapView.centerCoordinate;
-//    point.title = self.event.eventName;
-//    
-//    [self.eventMapView addAnnotation:point];
-//}
-//
-//-(void)zoomToLocation
-//{
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (CLLocationCoordinate2DMake(self.event.eventGeoPoint.latitude, self.event.eventGeoPoint.longitude), 1000, 1000);
-//    [self.eventMapView setRegion:region animated:NO];
-//}
-
-
-- (void)didReceiveMemoryWarning
+- (void)locateEventOnMap
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.eventMapView.centerCoordinate = self.eventGeoLocation.coordinate;
+    
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = self.eventMapView.centerCoordinate;
+    point.title = self.event.name;
+    
+    [self.eventMapView addAnnotation:point];
+}
+
+-(void)zoomToLocation
+{
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (self.eventGeoLocation.coordinate, 1000, 1000);
+    [self.eventMapView setRegion:region animated:NO];
 }
 
 

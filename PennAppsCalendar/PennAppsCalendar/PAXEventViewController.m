@@ -15,7 +15,6 @@
 @interface PAXEventViewController ()
 @property (strong, nonatomic) PAXEventDataController *eventDataController;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLGeocoder *geocoder;
 @property (strong, nonatomic) UIRefreshControl *refresher;
 @property (weak, nonatomic) IBOutlet UIImageView *eventTimeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
@@ -146,7 +145,6 @@
     eventCell.eventLocationLabel.text = event.location; //should grab event.location
     eventCell.eventMinutesLabel.text = @"Sept 10 \n9:00am–10:00am";
     eventCell.eventDescriptionLabel.text = event.notes;
-
     
     self.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.eventTimeImageView setTintColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00]];
@@ -255,20 +253,6 @@
     eventName.backgroundColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
     eventName.layer.cornerRadius = 5;
     eventName.clipsToBounds = YES;
-    
-}
-
-
-- (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
-{
-    if(!self.geocoder) {
-        self.geocoder = [[CLGeocoder alloc] init];
-    }
-    
-    [self.geocoder geocodeAddressString:address
-                      completionHandler:^(NSArray* placemarks, NSError* error){
-                          event.location = [((CLPlacemark *)[placemarks firstObject])location];
-                      }];
     
 }
 
