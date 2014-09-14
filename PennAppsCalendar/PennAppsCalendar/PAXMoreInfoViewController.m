@@ -68,6 +68,8 @@
     [self performSegueWithIdentifier:@"backToEvents" sender:self];
 }
 
+// Leave this for now, because while we are latituding/longituding everything,
+// we can only persist that as a string without more engineering work.
 - (void)convertAddressToCoordinates:(NSString *)address
                             ofEvent:(PAXEvent *)event
                        withCallback:(void(^)(void))callback

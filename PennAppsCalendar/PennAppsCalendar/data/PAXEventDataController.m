@@ -10,26 +10,34 @@
 #import <CoreData/CoreData.h>
 #import "AFHTTPRequestOperationManager.h"
 #import "PAXEvent.h"
+#import "PAXEventInfoDataController.h"
+#import "PAXGeolocationOperation.h"
 
 // Hard coded for now... Don't change between sessions
 // Also not really infinite... yet.
 // Other issues: currently re-fetches every time, among other things.
-#define BATCH_SIZE 250
+#define BATCH_SIZE 50
 
 #define DEBUG_MODE 1
 
-@interface PAXEventDataController () <NSFetchedResultsControllerDelegate>
+@interface PAXEventDataController () <NSFetchedResultsControllerDelegate, CLLocationManagerDelegate>
 {
     // keep track of changes, and batch them together
     NSMutableArray *_batchContentChanges;
     // We keep google's sort order, and cache the "next" index here
     NSUInteger _currentSortIndex;
+    // a set of location destinations that still need travel/time/distance fetching
+    NSMutableSet *_destinationsRequiringTravelInfo;
+    NSMutableArray *_eventsRequiringGeolocation;
 }
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readwrite, strong, nonatomic) NSArray *pendingChanges;
-
+// Todo: split this into another file, like a hook system, for event updating/processing
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSDictionary *cachedTravelTimes; // may want to make this mutable... but asynchronicity and don't want to think about it
+@property (strong, nonatomic) NSOperationQueue *geolocationOperationQueue;
 @end
 
 @implementation PAXEventDataController
@@ -53,6 +61,16 @@
         [self reset];
     }
     return self;
+}
+
+- (void)addTravelDestination:(NSString *)destination
+{
+    if (!_destinationsRequiringTravelInfo) {
+        _destinationsRequiringTravelInfo = [NSMutableSet setWithCapacity:5];
+    }
+    @synchronized(_destinationsRequiringTravelInfo) {
+        [_destinationsRequiringTravelInfo addObject:destination];
+    }
 }
 
 #pragma mark - Event Access
@@ -188,9 +206,51 @@
         event.startDate = [dateConverter dateFromString:startDateString];
     }
     event.uid = JSONEvent[@"id"];
+    if (event.location) {
+        // set the geolocation
+        [self queueFetchGeolocationOfEvent:event];
+    }
     event.googleSort = @(_currentSortIndex);
     _currentSortIndex++;
 }
+
+- (void)queueFetchGeolocationOfEvent:(PAXEvent *)event
+{
+    if (!event.location) {
+        return;
+    }
+    if(!self.geocoder) {
+        self.geocoder = [[CLGeocoder alloc] init];
+    }
+    if (!self.geolocationOperationQueue) {
+        self.geolocationOperationQueue = [[NSOperationQueue alloc] init];
+        [self.geolocationOperationQueue setMaxConcurrentOperationCount:1];
+        [self.geolocationOperationQueue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
+
+    }
+    PAXGeolocationOperation *geoLocationOperation = [[PAXGeolocationOperation alloc] initWithEvent:event];
+    [self.geolocationOperationQueue addOperation:geoLocationOperation];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.geolocationOperationQueue && [keyPath isEqualToString:@"operationCount"]) {
+        if (self.geolocationOperationQueue.operationCount == 0) {
+            NSLog(@"Operation queue count is complete, fetching travel info");
+            [self fetchTravelInfo];
+        }
+    }
+}
+
+
+// generate a string of form @"%f,%f" from a given CLLocation
+- (NSString *)stringFromLocation:(CLLocation *)location
+{
+    CLLocationCoordinate2D coordinates = [location coordinate];
+    NSString *geoLocationString = [NSString stringWithFormat:@"%f,%f", coordinates.latitude, coordinates.longitude];
+    return geoLocationString;
+}
+
 
 /**
  * Fetch and save events into the local managed object context.
@@ -198,6 +258,7 @@
  */
 - (void)saveEventsAfterDate:(NSDate *)date fetchCount:(NSUInteger)count onCompletion:(void (^)(void))callback
 {
+    _eventsRequiringGeolocation = [NSMutableArray arrayWithCapacity:5];
     [self processEventsAfterDate:date fetchCount:count withHandler:^(NSArray *events) {
         _currentSortIndex = 0;
         for (NSDictionary *JSONEvent in events) {
@@ -222,15 +283,86 @@
                                                    inManagedObjectContext:self.managedObjectContext];
             PAXEvent *newLocalEvent = [[PAXEvent alloc] initWithEntity:employeeEntity insertIntoManagedObjectContext:self.managedObjectContext];
             [self updateEvent:newLocalEvent withJSONEvent:JSONEvent];
-            
         }
         // Persist all changes
         [self saveContext];
         // call completion handler
         callback();
+        NSLog(@"finished fetching main event data");
+
     }];
 }
 
+- (void)fetchTravelInfo
+{
+    NSLog(@"fetching all travel information");
+    // Now, fetch all distances...
+    // IT would be wise to keep track of last updated Date when we do persist across sessions
+    // But currently we reset every time so it doesn't really matter
+    // 2. Grab current location
+    [self saveContext];
+    if (![CLLocationManager locationServicesEnabled]) {
+        return;
+    }
+    if (!self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        self.locationManager.distanceFilter = kCLDistanceFilterNone;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    }
+    [self.locationManager startUpdatingLocation];
+    // fetch the distances in the callback that we get when we get the first location
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+ {
+     [self.locationManager stopUpdatingLocation];
+     if (!_destinationsRequiringTravelInfo) {
+         return;
+     }
+     // Fetch travel times
+     // Note that this is lower priority. There will be two updates of the collection view
+     CLLocation *bestLocation = [locations lastObject];
+     NSLog(@"Hello hello location");
+     if (bestLocation) {
+         NSString *currentLocationString = [self stringFromLocation:bestLocation];
+         [[PAXEventInfoDataController sharedInfoDataController] fetchDistancesToDestinations:[_destinationsRequiringTravelInfo allObjects] fromLocation:currentLocationString onCompletion:^(NSDictionary *results) {
+             self.cachedTravelTimes = results;
+             NSLog(@"success");
+             // hackishly fire off an update TODO
+             self.pendingChanges = @[];
+         }];
+         [_destinationsRequiringTravelInfo removeAllObjects];
+     }
+     else {
+         NSLog(@"Current location could not be determined");
+     }
+
+ }
+
+- (NSString *)travelInfoForDestination:(NSString *)destination
+{
+    if (self.cachedTravelTimes) {
+        NSMutableString *travelInfo = [NSMutableString stringWithCapacity:6];
+        NSString *walking = self.cachedTravelTimes[destination][@"walking"];
+        NSString *driving = self.cachedTravelTimes[destination][@"driving"];
+        NSString *biking = self.cachedTravelTimes[destination][@"biking"];
+        if (walking) {
+            [travelInfo appendFormat:@"%@ walking\n", walking];
+        }
+        if (biking) {
+            [travelInfo appendFormat:@"%@ biking\n", biking];
+        }
+        if (driving) {
+            [travelInfo appendFormat:@"%@ driving\n", driving];
+        }
+        return [travelInfo copy];
+    }
+    else {
+        return @"Loading...";
+    }
+}
+     
 /**
  * Start fetching events, processing using the given event Handler.
  * Handle fetched JSON events by passing in an eventsHandler

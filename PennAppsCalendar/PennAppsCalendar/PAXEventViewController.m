@@ -177,6 +177,12 @@
     }
     eventCell.eventMinutesLabel.text = [combinedDateString copy];
     eventCell.eventDescriptionLabel.text = event.notes;
+    if (event.geoLocation) {
+        eventCell.eventWalkingTimeLabel.text = [self.eventDataController travelInfoForDestination:event.geoLocation];
+    }
+    else {
+        eventCell.eventWalkingTimeLabel.text = @"unavailable";
+    }
 
     
     self.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

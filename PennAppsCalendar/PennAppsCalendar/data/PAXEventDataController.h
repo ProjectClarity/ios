@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "PAXEvent.h"
+#import <MapKit/MapKit.h>
 
 @interface PAXEventDataController : NSObject
 
-+ (id)sharedEventDataController;
++ (PAXEventDataController *)sharedEventDataController;
 
 #pragma mark - Event Access
 
@@ -24,6 +25,17 @@
  * The window into all data that should be displayed
  */
 @property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) CLGeocoder *geocoder;
+
+/**
+ * precalculate a travel destination
+ */
+- (void)addTravelDestination:(NSString *)destination;
+
+/**
+ * Grab travel information for the given destination
+ */
+- (NSString *)travelInfoForDestination:(NSString *)destination;
 
 /**
  * An array of pending changes to the fetchedResultsController. Observe
