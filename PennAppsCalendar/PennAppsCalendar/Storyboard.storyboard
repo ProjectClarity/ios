@@ -264,6 +264,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="toggleRemindersForCurrentEvent:" destination="HcT-Db-iOD" eventType="touchUpInside" id="aCm-P4-mMq"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ticket" translatesAutoresizingMaskIntoConstraints="NO" id="MJ6-nJ-Gej">
                                 <rect key="frame" x="40" y="416" width="30" height="30"/>

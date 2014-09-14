@@ -47,6 +47,7 @@
 		87D19F6219C4ABB500FA1F5C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5719C4ABB500FA1F5C /* AFURLRequestSerialization.m */; };
 		87D19F6319C4ABB500FA1F5C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5919C4ABB500FA1F5C /* AFURLResponseSerialization.m */; };
 		87D19F6419C4ABB500FA1F5C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F5B19C4ABB500FA1F5C /* AFURLSessionManager.m */; };
+		87F6C3E119C5CA2F0026772D /* PAXEventNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F6C3E019C5CA2F0026772D /* PAXEventNotificationCenter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,8 @@
 		87D19F5919C4ABB500FA1F5C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		87D19F5A19C4ABB500FA1F5C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		87D19F5B19C4ABB500FA1F5C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		87F6C3DF19C5CA2F0026772D /* PAXEventNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventNotificationCenter.h; path = data/PAXEventNotificationCenter.h; sourceTree = "<group>"; };
+		87F6C3E019C5CA2F0026772D /* PAXEventNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventNotificationCenter.m; path = data/PAXEventNotificationCenter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +282,8 @@
 				87D19F4819C4ABB500FA1F5C /* AFNetworking */,
 				87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */,
 				87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */,
+				87F6C3DF19C5CA2F0026772D /* PAXEventNotificationCenter.h */,
+				87F6C3E019C5CA2F0026772D /* PAXEventNotificationCenter.m */,
 				8708C31C19C581BA00D13805 /* PAXGeolocationOperation.h */,
 				8708C31D19C581BA00D13805 /* PAXGeolocationOperation.m */,
 				8708C31319C5615600D13805 /* PAXEventInfoDataController.h */,
@@ -428,6 +433,7 @@
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
 				87D19F6419C4ABB500FA1F5C /* AFURLSessionManager.m in Sources */,
 				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,
+				87F6C3E119C5CA2F0026772D /* PAXEventNotificationCenter.m in Sources */,
 				8708C31119C5555C00D13805 /* PAXWebviewViewController.m in Sources */,
 				87D19F5D19C4ABB500FA1F5C /* AFHTTPRequestOperationManager.m in Sources */,
 				87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */,

@@ -9,6 +9,7 @@
 #import "PAXMoreInfoViewController.h"
 #import "PAXWebviewViewController.h"
 #import "PAXEventDataController.h"
+#import "PAXEventNotificationCenter.h"
 
 @interface PAXMoreInfoViewController () <CLLocationManagerDelegate>
 
@@ -48,6 +49,7 @@
 {
     [super viewDidLoad];
     
+    
     self.eventNameLabel.text = self.event.name;
 //    self.eventHostNameLabel.text = [NSString stringWithFormat:@"Event Host: %@", self.event.ownerName];
     self.eventHostNameLabel.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
@@ -80,9 +82,22 @@
     [self.uberImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
     
     self.remindersImageView.image = [self.remindersImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [self.remindersImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
+    [self updateRemindersImageViewColor];
 
     
+}
+
+- (void)updateRemindersImageViewColor
+{
+    BOOL isReminderScheduled = [PAXEventNotificationCenter isNotificationScheduledForEvent:self.event];
+    NSLog(@"Is reminder scheduled: %d", isReminderScheduled);
+    if (!isReminderScheduled) {
+        [self.remindersImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
+    }
+    else {
+        [self.remindersImageView setTintColor:[UIColor colorWithRed:85.0/255.0 green:240.0/255.0 blue:87.0/255.0 alpha:0.75]];
+        
+    }
 }
 
 #pragma mark - UI
@@ -249,6 +264,17 @@
         NSURL *integrationURL = [NSURL URLWithString:@"https://m.uber.com/sign-up?client_id=PAXPennAppsLOL"];
         [[UIApplication sharedApplication] openURL:integrationURL];
     }
+}
+
+- (IBAction)toggleRemindersForCurrentEvent:(id)sender
+{
+    if ([PAXEventNotificationCenter isNotificationScheduledForEvent:self.event]) {
+        [PAXEventNotificationCenter unscheduleReminderForEvent:self.event];
+    }
+    else {
+        [PAXEventNotificationCenter scheduleReminderForEvent:self.event];
+    }
+    [self updateRemindersImageViewColor];
 }
 
 @end

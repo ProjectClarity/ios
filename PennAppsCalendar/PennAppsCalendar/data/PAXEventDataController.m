@@ -12,6 +12,7 @@
 #import "PAXEvent.h"
 #import "PAXEventInfoDataController.h"
 #import "PAXGeolocationOperation.h"
+#import "PAXEventNotificationCenter.h"
 
 // Hard coded for now... Don't change between sessions
 // Also not really infinite... yet.
@@ -98,6 +99,7 @@
     NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"PAXEvents.sqlite"];
     [[NSFileManager defaultManager] removeItemAtPath:storeURL.path error:&error];
+    [PAXEventNotificationCenter unscheduleAllReminders];
 }
 
 
@@ -218,6 +220,7 @@
             }
         }
     }
+    [PAXEventNotificationCenter scheduleReminderForEvent:event];
     if (event.location) {
         // set the geolocation
         [self queueFetchGeolocationOfEvent:event];

@@ -24,4 +24,6 @@
 
 - (IBAction)handleEventLinkInUber:(id)sender;
 
+- (IBAction)toggleRemindersForCurrentEvent:(id)sender;
+
 @end
