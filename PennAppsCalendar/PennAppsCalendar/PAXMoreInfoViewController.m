@@ -117,4 +117,11 @@
 }
 */
 
+#pragma mark - Third Party integration
+
+- (void)handleEventLinkInEventbrite:(id)sender
+{
+    
+}
+
 @end

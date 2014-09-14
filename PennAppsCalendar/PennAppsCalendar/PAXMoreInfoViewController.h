@@ -15,7 +15,8 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *eventMapView;
 @property (strong, nonatomic) PAXEvent *event;
-
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+
+- (IBAction)handleEventLinkInEventbrite:(id)sender;
 
 @end
