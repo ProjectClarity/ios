@@ -33,6 +33,7 @@
 		8708C30719C512F800D13805 /* PAXMarginLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30619C512F800D13805 /* PAXMarginLabel.m */; };
 		8708C31119C5555C00D13805 /* PAXWebviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */; };
 		8708C31219C5555C00D13805 /* PAXWebviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */; };
+		8708C31519C5615600D13805 /* PAXEventInfoDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C31419C5615600D13805 /* PAXEventInfoDataController.m */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
@@ -98,6 +99,8 @@
 		8708C30E19C5555C00D13805 /* PAXWebviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXWebviewViewController.h; path = "UI Elements/PAXWebviewViewController.h"; sourceTree = "<group>"; };
 		8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXWebviewViewController.m; path = "UI Elements/PAXWebviewViewController.m"; sourceTree = "<group>"; };
 		8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PAXWebviewViewController.xib; path = "UI Elements/PAXWebviewViewController.xib"; sourceTree = "<group>"; };
+		8708C31319C5615600D13805 /* PAXEventInfoDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventInfoDataController.h; path = data/PAXEventInfoDataController.h; sourceTree = "<group>"; };
+		8708C31419C5615600D13805 /* PAXEventInfoDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventInfoDataController.m; path = data/PAXEventInfoDataController.m; sourceTree = "<group>"; };
 		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -273,6 +276,8 @@
 				87D19F4819C4ABB500FA1F5C /* AFNetworking */,
 				87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */,
 				87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */,
+				8708C31319C5615600D13805 /* PAXEventInfoDataController.h */,
+				8708C31419C5615600D13805 /* PAXEventInfoDataController.m */,
 				8708C30119C506EE00D13805 /* PAXEvent.h */,
 				8708C30219C506EE00D13805 /* PAXEvent.m */,
 				87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */,
@@ -415,6 +420,7 @@
 				87D19F5C19C4ABB500FA1F5C /* AFHTTPRequestOperation.m in Sources */,
 				87D19F5E19C4ABB500FA1F5C /* AFHTTPSessionManager.m in Sources */,
 				87D19F6219C4ABB500FA1F5C /* AFURLRequestSerialization.m in Sources */,
+				8708C31519C5615600D13805 /* PAXEventInfoDataController.m in Sources */,
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
 				87D19F6419C4ABB500FA1F5C /* AFURLSessionManager.m in Sources */,
 				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,

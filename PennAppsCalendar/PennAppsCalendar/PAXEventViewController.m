@@ -152,10 +152,30 @@
         eventCell.eventNotesLabel.textColor = [UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75];
     }
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSString *dayString = [dateFormatter stringFromDate:event.startDate];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    NSString *timeString = [dateFormatter stringFromDate:event.startDate];
+    NSString *timeEndString = [dateFormatter stringFromDate:event.endDate];
+    NSMutableString *combinedDateString = [NSMutableString stringWithCapacity:5];
+    [combinedDateString appendString:dayString];
+    [combinedDateString appendString:@"\n"];
+    [combinedDateString appendString:timeString];
+    [combinedDateString appendString:@"-"];
+    [combinedDateString appendString:timeEndString];
+    
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
-    eventCell.eventLocationLabel.text = event.location; //should grab event.location
-    eventCell.eventMinutesLabel.text = @"Sept 10 \n9:00am–10:00am";
+    if (!event.location) {
+        eventCell.eventLocationLabel.text = @"No location"; //should grab event.location
+    }
+    else {
+        eventCell.eventLocationLabel.text = event.location; //should grab event.location
+    }
+    eventCell.eventMinutesLabel.text = [combinedDateString copy];
     eventCell.eventDescriptionLabel.text = event.notes;
 
     
