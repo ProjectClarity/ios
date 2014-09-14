@@ -11,6 +11,7 @@
 
 @interface PAXHomeViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *pinCodeField;
+@property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
 @end
 
 @implementation PAXHomeViewController
@@ -28,6 +29,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self createButtonUI:self.getStartedButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,6 +51,18 @@
     [self performSegueWithIdentifier:@"AuthSegue" sender:sender];
 }
 
+
+- (void)createButtonUI:(UIButton *)button
+{
+    [[button titleLabel] setFont:[UIFont fontWithName:@"Montserrat-Regular" size:17.0]];
+    [button setTintColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00]];
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [[button layer] setBorderWidth:3.0f];
+    [[button layer] setBorderColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00].CGColor];
+    button.layer.cornerRadius = 5;
+    button.clipsToBounds = YES;
+    
+}
 /*
 #pragma mark - Navigation
 
