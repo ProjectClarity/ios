@@ -31,6 +31,8 @@
 		270A931019C518F2000B6F0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270A930F19C518F2000B6F0F /* CoreLocation.framework */; };
 		8708C30319C506EE00D13805 /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30219C506EE00D13805 /* PAXEvent.m */; };
 		8708C30719C512F800D13805 /* PAXMarginLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30619C512F800D13805 /* PAXMarginLabel.m */; };
+		8708C31119C5555C00D13805 /* PAXWebviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */; };
+		8708C31219C5555C00D13805 /* PAXWebviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
@@ -93,6 +95,9 @@
 		8708C30219C506EE00D13805 /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 		8708C30519C512F800D13805 /* PAXMarginLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXMarginLabel.h; path = "UI Elements/PAXMarginLabel.h"; sourceTree = "<group>"; };
 		8708C30619C512F800D13805 /* PAXMarginLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXMarginLabel.m; path = "UI Elements/PAXMarginLabel.m"; sourceTree = "<group>"; };
+		8708C30E19C5555C00D13805 /* PAXWebviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXWebviewViewController.h; path = "UI Elements/PAXWebviewViewController.h"; sourceTree = "<group>"; };
+		8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXWebviewViewController.m; path = "UI Elements/PAXWebviewViewController.m"; sourceTree = "<group>"; };
+		8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PAXWebviewViewController.xib; path = "UI Elements/PAXWebviewViewController.xib"; sourceTree = "<group>"; };
 		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -255,6 +260,9 @@
 			children = (
 				8708C30519C512F800D13805 /* PAXMarginLabel.h */,
 				8708C30619C512F800D13805 /* PAXMarginLabel.m */,
+				8708C30E19C5555C00D13805 /* PAXWebviewViewController.h */,
+				8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */,
+				8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -378,6 +386,7 @@
 				2707C45519C3D45C00A3419F /* InfoPlist.strings in Resources */,
 				2707C45D19C3D45D00A3419F /* Images.xcassets in Resources */,
 				270A930119C4C56B000B6F0F /* Montserrat-Regular.ttf in Resources */,
+				8708C31219C5555C00D13805 /* PAXWebviewViewController.xib in Resources */,
 				2707C47A19C3F92000A3419F /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +418,7 @@
 				2707C45B19C3D45D00A3419F /* PAXAppDelegate.m in Sources */,
 				87D19F6419C4ABB500FA1F5C /* AFURLSessionManager.m in Sources */,
 				2707C48319C3FD5400A3419F /* PAXHomeViewController.m in Sources */,
+				8708C31119C5555C00D13805 /* PAXWebviewViewController.m in Sources */,
 				87D19F5D19C4ABB500FA1F5C /* AFHTTPRequestOperationManager.m in Sources */,
 				87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */,
 				87D19F6319C4ABB500FA1F5C /* AFURLResponseSerialization.m in Sources */,

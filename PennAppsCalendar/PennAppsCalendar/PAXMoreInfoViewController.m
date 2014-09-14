@@ -7,6 +7,7 @@
 //
 
 #import "PAXMoreInfoViewController.h"
+#import "PAXWebviewViewController.h"
 
 @interface PAXMoreInfoViewController () <CLLocationManagerDelegate>
 
@@ -121,7 +122,20 @@
 
 - (void)handleEventLinkInEventbrite:(id)sender
 {
-    
+    NSURL *myURL = [NSURL URLWithString:@"http://eventbrite.com"];
+   /* NSURL *interAppURL = [NSURL URLWithString:@"com-eventbrite-attendee://"];
+    if ([[UIApplication sharedApplication] canOpenURL:interAppURL]) {
+        // Handle with the eventbrite app
+        [[UIApplication sharedApplication] openURL:myURL];
+        return;
+    }*/
+    // Open the eventbrite website in own webview
+    PAXWebviewViewController *webViewController = [[PAXWebviewViewController alloc] initWithNibName:@"PAXWebviewViewController" bundle:[NSBundle mainBundle]];
+    webViewController.url = myURL;
+    [self presentViewController:webViewController animated:YES completion:^{
+        [webViewController loadPage];
+        NSLog(@"completed");
+    }];
 }
 
 @end
