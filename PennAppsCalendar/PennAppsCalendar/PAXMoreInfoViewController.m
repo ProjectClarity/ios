@@ -51,7 +51,7 @@
     
     
     self.eventNameLabel.text = self.event.name;
-//    self.eventHostNameLabel.text = [NSString stringWithFormat:@"Event Host: %@", self.event.ownerName];
+    self.eventHostNameLabel.text = [NSString stringWithFormat:@"Event Host: %@", self.event.ownerName];
     self.eventHostNameLabel.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
     
     [self createEventNameUI:self.eventNameLabel];
