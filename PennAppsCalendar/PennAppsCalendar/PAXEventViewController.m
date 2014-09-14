@@ -17,6 +17,9 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLGeocoder *geocoder;
 @property (strong, nonatomic) UIRefreshControl *refresher;
+@property (weak, nonatomic) IBOutlet UIImageView *eventTimeImageView;
+@property (weak, nonatomic) IBOutlet UILabel *eventMinutesLabel;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbarView;
 @end
 
 @implementation PAXEventViewController
@@ -47,7 +50,6 @@
     self.eventDataController = [PAXEventDataController sharedEventDataController];
     [self.eventDataController addObserver:self forKeyPath:@"pendingChanges" options:0 context:0];
     
-    
     if (!self.refresher) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.tintColor = [UIColor grayColor];
@@ -61,6 +63,14 @@
     [self.eventDataController refreshAllEventsWithCallback:^{
         NSLog(@"first load!");
     }]; // TODO
+    
+    
+    // add a green outline to the toolbar
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, self.toolbarView.frame.size.height - 1, self.toolbarView.frame.size.width, 1.0f);
+    bottomBorder.backgroundColor = [UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:0.80].CGColor;
+    [self.toolbarView.layer addSublayer:bottomBorder];
+    
     
     //Establishing a location manager that will start updating the location of the user
     self.locationManager = [[CLLocationManager alloc] init];
@@ -107,36 +117,41 @@
     PAXEvent *event = [self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath];
     NSInteger minutesToEvent = (NSInteger)([event.startDate timeIntervalSinceDate:[NSDate date]] / 60);
     if (minutesToEvent < 0) {
-        eventCell.eventMinutesLabel.text = @"Happening Now";
+        self.eventMinutesLabel.text = @"happening now";
     }
     else if (minutesToEvent < 60) {
         if (minutesToEvent == 1) {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minute", (unsigned long)minutesToEvent];
+            self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu minute", (unsigned long)minutesToEvent];
         } else {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Minutes", (unsigned long)minutesToEvent];
+            self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu minutes", (unsigned long)minutesToEvent];
         }
     } else if (minutesToEvent >= 60 && minutesToEvent < (26*60)) {
         NSUInteger hoursToEvent = (int)(minutesToEvent / 60);
         if (hoursToEvent == 1) {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Hour", (unsigned long) hoursToEvent];
+            self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu hour", (unsigned long) hoursToEvent];
         } else {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Hours", (unsigned long) hoursToEvent];
+           self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu hours", (unsigned long) hoursToEvent];
         }
     } else {
         NSUInteger daysToEvent = (int)(minutesToEvent / (60 * 24));
         if (daysToEvent == 1) {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Day", (unsigned long) daysToEvent];
+            self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu day", (unsigned long) daysToEvent];
         } else {
-            eventCell.eventMinutesLabel.text = [NSString stringWithFormat:@"In %lu Days", (unsigned long) daysToEvent];
+            self.eventMinutesLabel.text = [NSString stringWithFormat:@"in %lu days", (unsigned long) daysToEvent];
         }
     }
     
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
     eventCell.eventLocationLabel.text = event.location; //should grab event.location
+    eventCell.eventMinutesLabel.text = @"Sept 10 \n9:00am–10:00am";
+    eventCell.eventDescriptionLabel.text = event.notes;
 
     
-    eventCell.eventTimeImageView.image = [eventCell.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.eventTimeImageView setTintColor:[UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00]];
+    
+    eventCell.eventTimeImageView.image = [self.eventTimeImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [eventCell.eventTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
     
     eventCell.eventLocationImageView.image = [eventCell.eventLocationImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -146,6 +161,7 @@
     [eventCell.eventWalkingTimeImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:108.0/255.0 blue:99.0/255.0 alpha:0.75]];
 
     [self createEventNameUI:eventCell.eventNameLabel];
+    [self createEventTimeUI:self.eventMinutesLabel];
     [self createEventOtherInfoUI:eventCell.eventMinutesLabel];
     [self createEventOtherInfoUI:eventCell.eventLocationLabel];
     [self createEventOtherInfoUI:eventCell.eventWalkingTimeLabel];
@@ -153,6 +169,7 @@
     return eventCell;
     
 }
+
 
 - (void)updateCollectionViewWithChanges:(NSArray *)changes
 {
@@ -200,7 +217,7 @@
 
 - (void)createEventNameUI:(UILabel *)eventName
 {
-    eventName.textColor = [UIColor whiteColor];
+    eventName.textColor = [UIColor whiteColor];//[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00];
     eventName.font = [UIFont fontWithName:@"Montserrat-Bold" size:26.0];
     eventName.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:1.00];
     eventName.layer.cornerRadius = 5;
@@ -208,17 +225,23 @@
     
 }
 
+- (void)createEventTimeUI:(UILabel *)eventLabel
+{
+    eventLabel.textColor = [UIColor colorWithRed:23.0/255.0 green:163.0/255.0 blue:102.0/255.0 alpha:1.00];
+    eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:22.0];
+}
+
 - (void)createEventOtherInfoUI:(UILabel *)eventLabel
 {
     eventLabel.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
-    eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
+    eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:17.0];
     
 }
 
 - (void)createEventLocationUI:(UILabel *)eventName
 {
     eventName.textColor = [UIColor whiteColor];
-    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
+    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:17.0];
     eventName.backgroundColor = [UIColor colorWithRed:208.0/255.0 green:142.0/255.0 blue:137.0/255.0 alpha:1.00];
     eventName.layer.cornerRadius = 5;
     eventName.clipsToBounds = YES;
