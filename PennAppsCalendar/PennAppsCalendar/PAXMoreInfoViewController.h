@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet MKMapView *eventMapView;
 @property (strong, nonatomic) PAXEvent *event;
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *getTicketsButton;
+@property (weak, nonatomic) IBOutlet UIButton *getUberButton;
+@property (weak, nonatomic) IBOutlet UIButton *getRemindersButton;
 
 - (IBAction)handleEventLinkInEventbrite:(id)sender;
 

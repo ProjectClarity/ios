@@ -164,8 +164,10 @@
     [combinedDateString appendString:dayString];
     [combinedDateString appendString:@"\n"];
     [combinedDateString appendString:timeString];
-    [combinedDateString appendString:@"-"];
-    [combinedDateString appendString:timeEndString];
+    if (timeEndString != nil) {
+        [combinedDateString appendString:@"-"];
+        [combinedDateString appendString:timeEndString];
+    }
     
     eventCell.backgroundColor = [UIColor whiteColor];
     eventCell.eventNameLabel.text = event.name; //should grab event.name
@@ -275,26 +277,6 @@
 {
     eventLabel.textColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
     eventLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:17.0];
-    
-}
-
-- (void)createEventLocationUI:(UILabel *)eventName
-{
-    eventName.textColor = [UIColor whiteColor];
-    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:17.0];
-    eventName.backgroundColor = [UIColor colorWithRed:208.0/255.0 green:142.0/255.0 blue:137.0/255.0 alpha:1.00];
-    eventName.layer.cornerRadius = 5;
-    eventName.clipsToBounds = YES;
-    
-}
-
-- (void)createEventWalkingTimeUI:(UILabel *)eventName
-{
-    eventName.textColor = [UIColor whiteColor];
-    eventName.font = [UIFont fontWithName:@"Montserrat-Regular" size:20.0];
-    eventName.backgroundColor = [UIColor colorWithRed:143.0/255.0 green:145.0/255.0 blue:156.0/255.0 alpha:1.00];
-    eventName.layer.cornerRadius = 5;
-    eventName.clipsToBounds = YES;
     
 }
 
