@@ -80,9 +80,15 @@
     
     [self.locationManager startUpdatingLocation];
     
-    UISwipeGestureRecognizer * swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
+    
+    //Swipes left and right
+    UISwipeGestureRecognizer * swipeleft =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
     swipeleft.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeleft];
+    
+    UISwipeGestureRecognizer* swiperight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
+    swiperight.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.eventsCollectionView addGestureRecognizer:swiperight];
     
     
 }
@@ -107,6 +113,27 @@
 -(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
 {
     [self performSegueWithIdentifier:@"eventMoreInfo" sender:self];
+}
+
+-(void)swiperight:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    
+    [self showAlertWithTitle:@"Deleting Event" message:@"Are you sure you want to delete?"];
+    
+    NSIndexPath *indexPath = [self.eventsCollectionView indexPathsForVisibleItems][0];
+    [self.eventDataController deleteEvent:[self.eventDataController.fetchedResultsController objectAtIndexPath:indexPath]];
+}
+
+-(void)showAlertWithTitle:(NSString *)title message:(NSString *)message
+{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    
+    [alert show];
 }
 
 - (IBAction)scrollToTop:(id)sender
@@ -162,7 +189,7 @@
     NSString *timeEndString = [dateFormatter stringFromDate:event.endDate];
     NSMutableString *combinedDateString = [NSMutableString stringWithCapacity:5];
     [combinedDateString appendString:dayString];
-    [combinedDateString appendString:@"\n"];
+    [combinedDateString appendString:@" "];
     [combinedDateString appendString:timeString];
     if (timeEndString != nil) {
         [combinedDateString appendString:@"-"];

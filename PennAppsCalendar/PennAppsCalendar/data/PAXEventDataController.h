@@ -54,5 +54,7 @@
  */
 - (void)refreshAllEventsWithCallback:(void(^)(void))callback;
 
+- (void)deleteEvent:(PAXEvent *)event;
+
 
 @end

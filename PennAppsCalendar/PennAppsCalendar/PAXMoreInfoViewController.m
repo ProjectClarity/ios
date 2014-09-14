@@ -162,7 +162,7 @@
 
 -(void)zoomToLocation
 {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (self.eventGeoLocation.coordinate, 3000, 3000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (self.eventGeoLocation.coordinate, 1000, 1000);
     [self.eventMapView setRegion:region animated:NO];
 }
 

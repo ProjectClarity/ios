@@ -403,6 +403,18 @@
     }];
 }
 
+- (void)deleteEvent:(PAXEvent *)event
+{
+    NSString *urlString = [NSString stringWithFormat:@"https://pennappsx-web.herokuapp.com/user/%lu/calendar/events/%@/destroy", (unsigned long)self.authPin, event.uid];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:NULL success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Deleting event");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ERROR: %@", error);
+    }];
+}
+
 #pragma mark - Core Data Stack
 
 @synthesize managedObjectContext = _managedObjectContext;
