@@ -28,11 +28,13 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self convertAddressToCoordinates:self.event.location ofEvent:self.event];
-    [self locateEventOnMap];
-    [self zoomToLocation];
-    NSLog(@"%@", self.event.location);
-    NSLog(@"%@", self.eventGeoLocation);
+    [self convertAddressToCoordinates:self.event.location ofEvent:self.event withCallback:^{
+        // asynchronously called
+        [self locateEventOnMap];
+        [self zoomToLocation];
+        NSLog(@"%@", self.event.location);
+        NSLog(@"%@", self.eventGeoLocation);
+    }];
 }
 
 - (void)viewDidLoad
@@ -42,7 +44,7 @@
     self.eventNameLabel.text = self.event.name;
     
     [self createEventNameUI:self.eventNameLabel];
-    
+    [self.eventMapView setShowsUserLocation:YES];
     
     UISwipeGestureRecognizer* swiperight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swiperight:)];
     swiperight.direction=UISwipeGestureRecognizerDirectionRight;
@@ -65,7 +67,9 @@
     [self performSegueWithIdentifier:@"backToEvents" sender:self];
 }
 
-- (void)convertAddressToCoordinates:(NSString *)address ofEvent:(PAXEvent *)event
+- (void)convertAddressToCoordinates:(NSString *)address
+                            ofEvent:(PAXEvent *)event
+                       withCallback:(void(^)(void))callback
 {
     if(!self.geocoder) {
         self.geocoder = [[CLGeocoder alloc] init];
@@ -76,6 +80,7 @@
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             self.eventGeoLocation = placemark.location;
         }
+        callback();
     }];
     
 }
@@ -95,7 +100,7 @@
 
 -(void)zoomToLocation
 {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (self.eventGeoLocation.coordinate, 1000, 1000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance (self.eventGeoLocation.coordinate, 3000, 3000);
     [self.eventMapView setRegion:region animated:NO];
 }
 

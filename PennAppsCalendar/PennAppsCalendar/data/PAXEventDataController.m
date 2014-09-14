@@ -239,12 +239,12 @@
 {
     // Fetch JSON from service
 #if DEBUG_MODE
-    NSLog(@"a;sdlkfj %d", self.authPin);
     if (self.authPin == 0) {
         self.authPin = 7023;
     }
 #endif
     NSString *urlString = [NSString stringWithFormat:@"https://pennappsx-web.herokuapp.com/user/%lu/calendar/events/%d", (unsigned long)self.authPin, BATCH_SIZE];
+    // Multiple calendars todo: integrate multiple calendars
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
