@@ -25,9 +25,9 @@
         return;
     }
     UILocalNotification *reminder = [[UILocalNotification alloc] init];
-    reminder.fireDate = [event.startDate dateByAddingTimeInterval:-(11*60)];
+    reminder.fireDate = [event.startDate dateByAddingTimeInterval:-(30*60)];
     reminder.timeZone = [NSTimeZone defaultTimeZone];
-    reminder.alertBody = [NSString stringWithFormat:@"%@ is happening in %i minutes.", event.name, 11];
+    reminder.alertBody = [NSString stringWithFormat:@"%@ is happening in %i minutes.", event.name, 30];
     reminder.alertAction = @"Details";
     [[UIApplication sharedApplication] scheduleLocalNotification:reminder];
     [self scheduledNotifications][event.uid] = reminder;
