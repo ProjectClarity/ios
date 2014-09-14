@@ -21,5 +21,6 @@
 @dynamic uid;
 @dynamic ownerName;
 @dynamic lastCalculatedDistance;
+@dynamic eventbriteURL;
 
 @end

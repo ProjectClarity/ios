@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * ownerName;
 @property (nonatomic, retain) NSString * lastCalculatedDistance;
+@property (nonatomic, retain) NSString * eventbriteURL;
 
 @end

@@ -206,6 +206,18 @@
         event.startDate = [dateConverter dateFromString:startDateString];
     }
     event.uid = JSONEvent[@"id"];
+    if (JSONEvent[@"extendedProperties"]) {
+        if (JSONEvent[@"extendedProperties"][@"shared"]) {
+            event.eventbriteURL = JSONEvent[@"extendedProperties"][@"shared"][@"eventbrite_url"];
+            if (!event.location) {
+                NSString *latitude = JSONEvent[@"extendedProperties"][@"shared"][@"latitude"];
+                NSString *longitude = JSONEvent[@"extendedProperties"][@"shared"][@"longitude"];
+                if (latitude && longitude) {
+                    event.geoLocation = [NSString stringWithFormat:@"%@,%@", latitude, longitude];
+                }
+            }
+        }
+    }
     if (event.location) {
         // set the geolocation
         [self queueFetchGeolocationOfEvent:event];

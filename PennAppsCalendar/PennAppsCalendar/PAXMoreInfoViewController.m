@@ -58,13 +58,22 @@
     swiperight.direction=UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swiperight];
     
+    if (!self.event.eventbriteURL) {
+        [self.getTicketsButton setEnabled:NO];
+    }
+    
     [self createRoundButtonUI:self.getTicketsButton];
     [self createRoundButtonUI:self.getUberButton];
     [self createRoundButtonUI:self.getRemindersButton];
     [self createContactButtonUI:self.contactHostButton];
     
     self.ticketsImageView.image = [self.ticketsImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [self.ticketsImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
+    if (!self.getTicketsButton.enabled) {
+        [self.ticketsImageView setTintColor:[UIColor colorWithRed:200.0/255.0 green:180.0/255.0 blue:180.0/255.0 alpha:0.75]];
+    }
+    else {
+        [self.ticketsImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
+    }
     
     self.uberImageView.image = [self.uberImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.uberImageView setTintColor:[UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75]];
@@ -83,7 +92,12 @@
     button.clipsToBounds = YES;
     
     button.layer.borderWidth = 3.0f;
-    button.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75].CGColor;
+    if (!button.enabled) {
+        button.layer.borderColor = [UIColor colorWithRed:200.0/255.0 green:180.0/255.0 blue:180.0/255.0 alpha:0.75].CGColor;
+    }
+    else {
+        button.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:84.0/255.0 blue:87.0/255.0 alpha:0.75].CGColor;
+    }
 }
 
 - (void)createContactButtonUI:(UIButton *)button
@@ -181,7 +195,10 @@
 
 - (void)handleEventLinkInEventbrite:(id)sender
 {
-    NSURL *myURL = [NSURL URLWithString:@"http://eventbrite.com"];
+    if (!self.event.eventbriteURL) {
+        return;
+    }
+    NSURL *myURL = [NSURL URLWithString:self.event.eventbriteURL];
    /* NSURL *interAppURL = [NSURL URLWithString:@"com-eventbrite-attendee://"];
     if ([[UIApplication sharedApplication] canOpenURL:interAppURL]) {
         // Handle with the eventbrite app
