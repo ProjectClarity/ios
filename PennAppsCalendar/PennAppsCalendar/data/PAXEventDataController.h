@@ -26,6 +26,7 @@
  */
 @property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) CLGeocoder *geocoder;
+@property (strong, nonatomic) CLLocation *currentLocation;
 
 /**
  * precalculate a travel destination

@@ -337,6 +337,7 @@
      CLLocation *bestLocation = [locations lastObject];
      NSLog(@"Hello hello location");
      if (bestLocation) {
+         self.currentLocation = bestLocation;
          NSString *currentLocationString = [self stringFromLocation:bestLocation];
          [[PAXEventInfoDataController sharedInfoDataController] fetchDistancesToDestinations:[_destinationsRequiringTravelInfo allObjects] fromLocation:currentLocationString onCompletion:^(NSDictionary *results) {
              self.cachedTravelTimes = results;

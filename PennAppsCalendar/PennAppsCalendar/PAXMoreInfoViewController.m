@@ -8,6 +8,7 @@
 
 #import "PAXMoreInfoViewController.h"
 #import "PAXWebviewViewController.h"
+#import "PAXEventDataController.h"
 
 @interface PAXMoreInfoViewController () <CLLocationManagerDelegate>
 
@@ -212,6 +213,42 @@
         [webViewController loadPage];
         NSLog(@"completed");
     }];
+}
+
+- (void)handleEventLinkInUber:(id)sender
+{
+    NSLog(@"HANDLING UBER EVENT");
+    
+    CLLocation *currentLocation = [PAXEventDataController sharedEventDataController].currentLocation;
+
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"uber://"]]) {
+        // Do something awesome - the app is installed! Launch App.
+        NSMutableString *queryString = [NSMutableString stringWithString:@"uber://?action=setPickup"];
+        if (currentLocation) {
+            [queryString appendString:[NSString stringWithFormat:@"&pickup[latitude]=%f&pickup[longitude]=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude]];
+        }
+        if (self.event.geoLocation) {
+            NSArray *coords = [self.event.geoLocation componentsSeparatedByString:@","];
+            if (coords.count == 2) {
+                CGFloat latitude = [coords[0] floatValue];
+                CGFloat longitude = [coords[1] floatValue];
+                [queryString appendString:[NSString stringWithFormat:@"&dropoff[latitude]=%f&dropoff[longitude]=%f", latitude, longitude]];
+            }
+        }
+        if (self.event.location) {
+            [queryString appendString:[NSString stringWithFormat:@"&dropoff[nickname]=%@", self.event.location]];
+
+        }
+        NSString *finalURL = [queryString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+        NSURL *integrationURL = [NSURL URLWithString:finalURL];
+        [[UIApplication sharedApplication] openURL:integrationURL];
+    }
+    else {
+        // No Uber app! Open Mobile Website.
+        NSURL *integrationURL = [NSURL URLWithString:@"https://m.uber.com/sign-up?client_id=PAXPennAppsLOL"];
+        [[UIApplication sharedApplication] openURL:integrationURL];
+    }
 }
 
 @end

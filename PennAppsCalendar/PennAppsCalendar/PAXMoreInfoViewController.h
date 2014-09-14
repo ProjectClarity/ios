@@ -22,4 +22,6 @@
 
 - (IBAction)handleEventLinkInEventbrite:(id)sender;
 
+- (IBAction)handleEventLinkInUber:(id)sender;
+
 @end
