@@ -29,12 +29,12 @@
 		270A930519C4D342000B6F0F /* PAXBackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */; };
 		270A930E19C4F6DA000B6F0F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270A930D19C4F6DA000B6F0F /* MapKit.framework */; };
 		270A931019C518F2000B6F0F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270A930F19C518F2000B6F0F /* CoreLocation.framework */; };
+		270A931319C5A413000B6F0F /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A931219C5A413000B6F0F /* PAXEvent.m */; };
 		8708C30719C512F800D13805 /* PAXMarginLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30619C512F800D13805 /* PAXMarginLabel.m */; };
 		8708C31119C5555C00D13805 /* PAXWebviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C30F19C5555C00D13805 /* PAXWebviewViewController.m */; };
 		8708C31219C5555C00D13805 /* PAXWebviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8708C31019C5555C00D13805 /* PAXWebviewViewController.xib */; };
 		8708C31519C5615600D13805 /* PAXEventInfoDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C31419C5615600D13805 /* PAXEventInfoDataController.m */; };
 		8708C31E19C581BA00D13805 /* PAXGeolocationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C31D19C581BA00D13805 /* PAXGeolocationOperation.m */; };
-		8708C32119C5939500D13805 /* PAXEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708C32019C5939500D13805 /* PAXEvent.m */; };
 		87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */; };
 		87D19F0E19C413EF00FA1F5C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D19F0D19C413EF00FA1F5C /* CoreData.framework */; };
 		87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */; };
@@ -93,6 +93,8 @@
 		270A930419C4D342000B6F0F /* PAXBackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAXBackgroundLayer.m; sourceTree = "<group>"; };
 		270A930D19C4F6DA000B6F0F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270A930F19C518F2000B6F0F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		270A931119C5A413000B6F0F /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
+		270A931219C5A413000B6F0F /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 		8708C30519C512F800D13805 /* PAXMarginLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXMarginLabel.h; path = "UI Elements/PAXMarginLabel.h"; sourceTree = "<group>"; };
 		8708C30619C512F800D13805 /* PAXMarginLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXMarginLabel.m; path = "UI Elements/PAXMarginLabel.m"; sourceTree = "<group>"; };
 		8708C30E19C5555C00D13805 /* PAXWebviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXWebviewViewController.h; path = "UI Elements/PAXWebviewViewController.h"; sourceTree = "<group>"; };
@@ -102,8 +104,6 @@
 		8708C31419C5615600D13805 /* PAXEventInfoDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventInfoDataController.m; path = data/PAXEventInfoDataController.m; sourceTree = "<group>"; };
 		8708C31C19C581BA00D13805 /* PAXGeolocationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXGeolocationOperation.h; path = data/PAXGeolocationOperation.h; sourceTree = "<group>"; };
 		8708C31D19C581BA00D13805 /* PAXGeolocationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXGeolocationOperation.m; path = data/PAXGeolocationOperation.m; sourceTree = "<group>"; };
-		8708C31F19C5939500D13805 /* PAXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEvent.h; path = data/PAXEvent.h; sourceTree = "<group>"; };
-		8708C32019C5939500D13805 /* PAXEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEvent.m; path = data/PAXEvent.m; sourceTree = "<group>"; };
 		87D19EBD19C410A700FA1F5C /* PAXEventDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PAXEventDataController.h; path = data/PAXEventDataController.h; sourceTree = "<group>"; };
 		87D19EBE19C410A700FA1F5C /* PAXEventDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PAXEventDataController.m; path = data/PAXEventDataController.m; sourceTree = "<group>"; };
 		87D19F0D19C413EF00FA1F5C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -283,9 +283,9 @@
 				8708C31D19C581BA00D13805 /* PAXGeolocationOperation.m */,
 				8708C31319C5615600D13805 /* PAXEventInfoDataController.h */,
 				8708C31419C5615600D13805 /* PAXEventInfoDataController.m */,
+				270A931119C5A413000B6F0F /* PAXEvent.h */,
+				270A931219C5A413000B6F0F /* PAXEvent.m */,
 				87D19F0F19C4142800FA1F5C /* PAXEvents.xcdatamodeld */,
-				8708C31F19C5939500D13805 /* PAXEvent.h */,
-				8708C32019C5939500D13805 /* PAXEvent.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -432,7 +432,7 @@
 				87D19F5D19C4ABB500FA1F5C /* AFHTTPRequestOperationManager.m in Sources */,
 				87D19EBF19C410A700FA1F5C /* PAXEventDataController.m in Sources */,
 				87D19F6319C4ABB500FA1F5C /* AFURLResponseSerialization.m in Sources */,
-				8708C32119C5939500D13805 /* PAXEvent.m in Sources */,
+				270A931319C5A413000B6F0F /* PAXEvent.m in Sources */,
 				2707C48019C3FD3A00A3419F /* PAXMoreInfoViewController.m in Sources */,
 				8708C31E19C581BA00D13805 /* PAXGeolocationOperation.m in Sources */,
 				87D19F1119C4142800FA1F5C /* PAXEvents.xcdatamodeld in Sources */,

@@ -411,6 +411,8 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:NULL success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Deleting event");
+        [self.managedObjectContext deleteObject:event];
+        [self saveContext];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"ERROR: %@", error);
     }];

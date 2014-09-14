@@ -21,7 +21,7 @@
 //                    completion:NULL];
     
     [UIView animateWithDuration:0.6f
-                          delay:0
+                          delay:-0.1
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          [src.navigationController pushViewController:dst animated:YES];
