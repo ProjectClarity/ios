@@ -346,12 +346,8 @@
         NSMutableString *travelInfo = [NSMutableString stringWithCapacity:6];
         NSString *walking = self.cachedTravelTimes[destination][@"walking"];
         NSString *driving = self.cachedTravelTimes[destination][@"driving"];
-        NSString *biking = self.cachedTravelTimes[destination][@"biking"];
         if (walking) {
             [travelInfo appendFormat:@"%@ walking\n", walking];
-        }
-        if (biking) {
-            [travelInfo appendFormat:@"%@ biking\n", biking];
         }
         if (driving) {
             [travelInfo appendFormat:@"%@ driving\n", driving];
